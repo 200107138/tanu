@@ -1,4 +1,4 @@
-package com.example.tanu.Models
+package com.example.tanu.data.Models
 
 data class Post(
     val postId: String,

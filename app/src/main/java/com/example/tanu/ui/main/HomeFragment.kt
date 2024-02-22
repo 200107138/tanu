@@ -1,4 +1,4 @@
-package com.example.tanu
+package com.example.tanu.ui.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.example.tanu.Adapters.PostsAdapter
-import com.example.tanu.Models.Post
-import com.example.tanu.Repository.MainRepository
-import com.example.tanu.Retrofit.ApiClient
+import com.example.tanu.data.Adapters.PostsAdapter
+import com.example.tanu.data.Models.Post
+import com.example.tanu.R
+import com.example.tanu.SessionManager
+import com.example.tanu.data.Repository.MainRepository
+import com.example.tanu.data.Retrofit.ApiClient
 import com.example.tanu.databinding.FragmentHomeBinding
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -36,8 +38,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val retrofitService = ApiClient()
-        val repository = MainRepository(retrofitService.getApiService(requireContext()))
+        val apiClient = ApiClient()
+        val sessionManager = SessionManager(requireContext()) // Create SessionManager instance
+        val repository = MainRepository(apiClient.getApiService(requireContext()), sessionManager)
         viewModel = ViewModelProvider(this, HomeViewModelFactory(repository)).get(HomeViewModel::class.java)
         observeViewModel()
         viewModel.fetchData()

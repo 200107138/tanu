@@ -1,11 +1,11 @@
-package com.example.tanu.Adapters
+package com.example.tanu.data.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.tanu.Models.Post
+import com.example.tanu.data.Models.Post
 import com.example.tanu.databinding.PostLayoutBinding
 
 class PostsAdapter(private val context: Context, private val list: ArrayList<Post>) :

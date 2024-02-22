@@ -1,9 +1,9 @@
-package com.example.tanu
+package com.example.tanu.ui.main
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.fragment.app.Fragment
 
 class MainViewModel : ViewModel() {
     private val _currentFragment = MutableLiveData<Fragment>()

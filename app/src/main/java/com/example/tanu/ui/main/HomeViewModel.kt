@@ -1,11 +1,11 @@
-package com.example.tanu
+package com.example.tanu.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tanu.Models.Post
-import com.example.tanu.Repository.MainRepository
+import com.example.tanu.data.Models.Post
+import com.example.tanu.data.Repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 class HomeViewModel(private val repository: MainRepository) : ViewModel() {

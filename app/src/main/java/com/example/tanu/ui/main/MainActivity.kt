@@ -1,11 +1,12 @@
-package com.example.tanu
+package com.example.tanu.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanu.R
 import com.example.tanu.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,9 +46,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.changeFragment(HomeFragment())
         }
 
-        viewModel.currentFragment.observe(this, { fragment ->
+        viewModel.currentFragment.observe(this) { fragment ->
             replaceFragment(fragment)
-        })
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {

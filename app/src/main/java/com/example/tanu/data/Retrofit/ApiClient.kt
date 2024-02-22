@@ -1,7 +1,8 @@
-package com.example.tanu.Retrofit
+package com.example.tanu.data.Retrofit
 
 import android.content.Context
 import com.example.tanu.SessionManager
+import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -18,7 +19,7 @@ class ApiClient {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://us-central1-tanu-f4bc0.cloudfunctions.net/")
                 .addConverterFactory(GsonConverterFactory.create())
-            .client(okhttpClient(context)) // Add our Okhttp client
+                .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
 
             apiService = retrofit.create(ApiService::class.java)
@@ -35,17 +36,21 @@ class ApiClient {
             .addInterceptor(AuthInterceptor(context))
             .build()
     }
-
 }
+
 class AuthInterceptor(context: Context) : Interceptor {
     private val sessionManager = SessionManager(context)
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val requestBuilder = chain.request().newBuilder()
 
-        // If token has been saved, add it to the request
-        sessionManager.fetchAuthToken()?.let {
-            requestBuilder.addHeader("Authorization", "Bearer $it")
+        // If login and password have been saved, add them to the request
+        sessionManager.fetchLogin()?.let { login ->
+            sessionManager.fetchPassword()?.let { password ->
+                // You might need to adjust this part depending on your API's authentication method
+                val credentials = Credentials.basic(login, password)
+                requestBuilder.addHeader("Authorization", credentials)
+            }
         }
 
         return chain.proceed(requestBuilder.build())

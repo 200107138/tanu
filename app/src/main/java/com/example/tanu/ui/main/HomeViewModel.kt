@@ -16,6 +16,9 @@ class HomeViewModel(private val repository: MainRepository) : ViewModel() {
     private val _errorLiveData: MutableLiveData<String> = MutableLiveData()
     val errorLiveData: LiveData<String> = _errorLiveData
 
+    private val _commentStatusLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    val commentStatusLiveData: LiveData<Boolean> = _commentStatusLiveData
+
     fun fetchData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -27,6 +30,16 @@ class HomeViewModel(private val repository: MainRepository) : ViewModel() {
                 }
             } catch (e: Exception) {
                 _errorLiveData.postValue("Network error")
+            }
+        }
+    }
+    fun postComment(postId: String, commentText: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.postComment(postId, commentText)
+                _commentStatusLiveData.postValue(true) // Comment posted successfully
+            } catch (e: Exception) {
+                _errorLiveData.postValue("Failed to post comment")
             }
         }
     }

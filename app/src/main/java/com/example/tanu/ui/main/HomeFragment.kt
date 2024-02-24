@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.tanu.data.Adapters.PostsAdapter
 import com.example.tanu.data.Models.Post
 import com.example.tanu.R
@@ -16,16 +15,12 @@ import com.example.tanu.SessionManager
 import com.example.tanu.data.Repository.MainRepository
 import com.example.tanu.data.Retrofit.ApiClient
 import com.example.tanu.databinding.FragmentHomeBinding
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import com.yuyakaido.android.cardstackview.CardStackListener
-import com.yuyakaido.android.cardstackview.Direction
 
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var postsAdapter: PostsAdapter
-    private lateinit var manager: CardStackLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,27 +53,22 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.commentStatusLiveData.observe(viewLifecycleOwner) { commentPosted ->
+            if (commentPosted) {
+                Toast.makeText(requireContext(), "Comment posted successfully", Toast.LENGTH_SHORT).show()
+                // Optionally, update UI or take any other action
+            } else {
+                // Handle if comment posting failed
+                Toast.makeText(requireContext(), "Failed to post comment", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initCardStackView(posts: ArrayList<Post>) {
-        manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
-            override fun onCardDragging(direction: Direction?, ratio: Float) {}
-            override fun onCardSwiped(direction: Direction?) {}
-            override fun onCardRewound() {}
-            override fun onCardCanceled() {}
-            override fun onCardAppeared(view: View?, position: Int) {}
-            override fun onCardDisappeared(view: View?, position: Int) {}
-        })
-        manager.setVisibleCount(3)
-        manager.setTranslationInterval(0.6f)
-        manager.setScaleInterval(0.8f)
-        manager.setMaxDegree(20.0f)
-        manager.setDirections(Direction.HORIZONTAL)
-        postsAdapter = PostsAdapter(requireContext(), posts)
-        binding.cardStackView.apply {
-            layoutManager = manager
-            itemAnimator = DefaultItemAnimator()
-            adapter = postsAdapter
+        postsAdapter = PostsAdapter(requireContext(), posts) { postId, commentText ->
+            viewModel.postComment(postId, commentText)
         }
+        val viewPager2 = binding.viewPager2
+        viewPager2.adapter = postsAdapter
     }
 }

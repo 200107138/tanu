@@ -4,6 +4,8 @@ import com.example.tanu.data.Models.LoginResponse
 import com.example.tanu.data.Models.Post
 import com.example.tanu.data.Models.RegisterResponse
 import com.example.tanu.data.Models.AuthRequest
+import com.example.tanu.data.Models.CommentRequest
+import com.example.tanu.data.Models.CommentResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -19,4 +21,9 @@ interface ApiService {
 
     @POST("register")
     suspend fun register(@Body request: AuthRequest): Response<RegisterResponse>
+
+    @POST("postComment")
+    suspend fun postComment(
+        @Body request: CommentRequest
+    ): Response<CommentResponse>
 }

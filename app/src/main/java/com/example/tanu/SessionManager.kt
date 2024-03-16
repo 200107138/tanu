@@ -7,31 +7,31 @@ class SessionManager(context: Context) {
     private var prefs: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
     companion object {
-        const val USER_LOGIN = "user_login"
-        const val USER_PASSWORD = "user_password"
+        const val ACCESS_TOKEN = "access_token"
+        const val REFRESH_TOKEN = "refresh_token"
     }
 
     /**
-     * Function to save login and password
+     * Function to save access token and refresh token
      */
-    fun saveCredentials(login: String, password: String) {
+    fun saveTokens(accessToken: String, refreshToken: String) {
         val editor = prefs.edit()
-        editor.putString(USER_LOGIN, login)
-        editor.putString(USER_PASSWORD, password)
+        editor.putString(ACCESS_TOKEN, accessToken)
+        editor.putString(REFRESH_TOKEN, refreshToken)
         editor.apply()
     }
 
     /**
-     * Function to fetch login from SharedPreferences
+     * Function to fetch access token from SharedPreferences
      */
-    fun fetchLogin(): String? {
-        return prefs.getString(USER_LOGIN, null)
+    fun fetchAccessToken(): String? {
+        return prefs.getString(ACCESS_TOKEN, null)
     }
 
     /**
-     * Function to fetch password from SharedPreferences
+     * Function to fetch refresh token from SharedPreferences
      */
-    fun fetchPassword(): String? {
-        return prefs.getString(USER_PASSWORD, null)
+    fun fetchRefreshToken(): String? {
+        return prefs.getString(REFRESH_TOKEN, null)
     }
 }

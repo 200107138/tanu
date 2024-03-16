@@ -1,12 +1,11 @@
-package com.example.tanu.data.Adapters
+package com.example.tanu.data.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.tanu.data.Models.Post
+import com.example.tanu.data.models.Post
 import com.example.tanu.databinding.PostLayoutBinding
 
 class PostsAdapter(
@@ -28,21 +27,14 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        holder.binding.postTitle.text = list[position].postId
-        holder.binding.postDescription.text = list[position].title
-        Glide.with(context).load(list[position].mediaUrl).into(holder.binding.imageView)
+        holder.binding.postDescription.text = list[position].description
+        Glide.with(context).load(list[position].mediaUrl).into(holder.binding.postMedia)
         // Set click listener for comment button
-        holder.binding.commentButton.setOnClickListener {
-            val postId = list[position].postId
-            val commentText = holder.binding.commentEditText.text.toString()
-            if (commentText.isNotEmpty()) {
-                onItemClick(postId, commentText)
-                // Optionally, clear the EditText after commenting
-                holder.binding.commentEditText.text.clear()
-            } else {
-                // Show error message if comment text is empty
-                Toast.makeText(context, "Comment text cannot be empty", Toast.LENGTH_SHORT).show()
-            }
+        holder.binding.messageButton.setOnClickListener {
+
+        }
+        holder.binding.commentEditText.setOnClickListener {
+
         }
     }
 

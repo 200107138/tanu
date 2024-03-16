@@ -9,7 +9,7 @@
         android:icon="@drawable/baseline_map_24"
         android:title="Карта" />
     <item
-        android:id="@+id/navigation_messages"
+        android:id="@+id/navigation_conversations"
         android:icon="@drawable/baseline_message_24"
         android:title="хабарлар" />
     <item

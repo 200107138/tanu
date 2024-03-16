@@ -1,4 +1,4 @@
-package com.example.tanu.data.Models
+package com.example.tanu.data.models
 
 data class CommentRequest(
     val post_id: String,

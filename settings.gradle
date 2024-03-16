@@ -11,8 +11,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // added for CardStackView
-        maven { url 'https://jitpack.io'}
     }
 }
 rootProject.name = "tanu"

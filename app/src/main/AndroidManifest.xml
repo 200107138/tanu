@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tanu"
         tools:targetApi="34">
+
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.auth.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,9 +24,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity">
+        <activity android:name=".ui.main.MainActivity">
+
             <!-- Additional activity attributes -->
         </activity>
+        <activity android:name=".ui.main.MessageActivity">
+
+            <!-- Additional activity attributes -->
+        </activity>
+        <activity android:name=".ui.main.TestActivity">
+
+            <!-- Additional activity attributes -->
+        </activity>
+
     </application>
 
 </manifest>

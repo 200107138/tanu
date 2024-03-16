@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
                     viewModel.changeFragment(MapFragment())
                     return@setOnItemSelectedListener true
                 }
-                R.id.navigation_messages -> {
-                    viewModel.changeFragment(MessagesFragment())
+                R.id.navigation_conversations -> {
+                    viewModel.changeFragment(ChatRoomsFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {

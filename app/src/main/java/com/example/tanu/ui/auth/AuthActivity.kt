@@ -2,17 +2,14 @@ package com.example.tanu.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanu.R
 import com.example.tanu.SessionManager
-import com.example.tanu.data.Repository.MainRepository
-import com.example.tanu.data.Retrofit.ApiClient
+import com.example.tanu.data.repository.MainRepository
+import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.ActivityAuthBinding
 import com.example.tanu.ui.main.MainActivity
 
@@ -32,12 +29,10 @@ class AuthActivity : AppCompatActivity() {
         val sharedFactory = AuthViewModelFactory(repository)
         sharedViewModel = ViewModelProvider(this, sharedFactory).get(AuthViewModel::class.java)
 
-        sharedViewModel.loginStatus.observe(this, Observer { loginStatus ->
-            if (loginStatus) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                // Handle login failure if needed
+        // Observe login success
+        sharedViewModel.loginSuccess.observe(this, Observer { success ->
+            if (success) {
+                navigateToMainActivity()
             }
         })
 
@@ -46,6 +41,12 @@ class AuthActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, LoginFragment.newInstance(sharedViewModel))
                 .commit()
         }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // Finish AuthActivity to prevent going back
     }
 
     fun navigateToRegister() {

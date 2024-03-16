@@ -6,12 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.tanu.R
-import com.example.tanu.SessionManager
-import com.example.tanu.data.Repository.MainRepository
-import com.example.tanu.data.Retrofit.ApiClient
-import com.example.tanu.databinding.FragmentLoginBinding
 import com.example.tanu.databinding.FragmentRegisterBinding
 
 // RegisterFragment.kt

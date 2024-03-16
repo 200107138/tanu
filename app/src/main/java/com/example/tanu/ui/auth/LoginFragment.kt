@@ -1,18 +1,12 @@
 package com.example.tanu.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.tanu.R
-import com.example.tanu.SessionManager
-import com.example.tanu.data.Repository.MainRepository
-import com.example.tanu.data.Retrofit.ApiClient
-import com.example.tanu.databinding.FragmentHomeBinding
 import com.example.tanu.databinding.FragmentLoginBinding
 
 // LoginFragment.kt

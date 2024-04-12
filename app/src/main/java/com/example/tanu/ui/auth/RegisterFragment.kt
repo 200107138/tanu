@@ -20,15 +20,10 @@ class RegisterFragment(private val sharedViewModel: AuthViewModel) : Fragment() 
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
-        binding.registerButton.setOnClickListener {
+        binding.signup.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            val confirmPassword = binding.confirmPasswordEditText.text.toString()
             sharedViewModel.register(email, password)
-        }
-
-        binding.backButton.setOnClickListener {
-            requireActivity().onBackPressed()
         }
 
         return binding.root

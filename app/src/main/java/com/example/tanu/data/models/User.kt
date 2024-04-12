@@ -1,8 +1,10 @@
 package com.example.tanu.data.models
 
+import com.google.gson.annotations.SerializedName
+
 data class User(
-    val userId: String,
-    val displayName: String,
-    val email: String,
-    val avatarUrl: String
+    @SerializedName("_id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("avatar_url") val avatarUrl: String
 )

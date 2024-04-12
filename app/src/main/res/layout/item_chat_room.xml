@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
@@ -8,24 +9,63 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="chatRoomId"
-            android:layout_height="wrap_content"
-            android:id="@+id/chatRoomId"
-            app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_shape"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/postMedia" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar">
+
+            <TextView
+                android:textSize="20dp"
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3"></TextView>
+
+            <TextView
+                android:id="@+id/chatRoomLastMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#6C6C6C"
+                android:text="LastMessage"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                tools:layout_editor_absoluteY="19dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/postMedia"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/chatRoomLastMessage"
-            android:layout_width="wrap_content"
-            android:text="conversationLastMessage"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/chatRoomId"
-            app:layout_constraintStart_toStartOf="@+id/chatRoomId"
-            app:layout_constraintTop_toBottomOf="@+id/chatRoomId" />
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/materialDivider"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

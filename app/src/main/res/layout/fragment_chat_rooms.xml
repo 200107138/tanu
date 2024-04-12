@@ -10,15 +10,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ED85FF"
-        tools:context=".ui.main.ChatRoomsFragment">
+        android:background="#FFFFFF"
+        tools:context=".ui.messages.ChatRoomsFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatRoomsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#16433F"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

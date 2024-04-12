@@ -8,41 +8,34 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/senderAvatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/teal_200"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="16dp"
+            android:background="@drawable/circle_shape"
 
-        <TextView
-            android:id="@+id/senderName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="senderName"
-            app:layout_constraintStart_toEndOf="@+id/senderAvatar"
+
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/messageText"
             android:layout_width="wrap_content"
-            android:text="messageText"
+            android:padding="8dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/senderName"
-            app:layout_constraintStart_toStartOf="@+id/senderName"
-            app:layout_constraintTop_toBottomOf="@+id/senderName" />
+            android:layout_marginStart="8dp"
+            android:background="@drawable/recieved_message_text_background"
+            android:gravity = "center|start"
 
-        <TextView
-            android:id="@+id/messageDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="messageDate"
-            app:layout_constraintEnd_toEndOf="@+id/messageText"
-            app:layout_constraintStart_toStartOf="@+id/messageText"
-            app:layout_constraintTop_toBottomOf="@+id/messageText" />
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintHeight_min="50dp"
+            app:layout_constraintStart_toEndOf="@+id/senderAvatar"
+            app:layout_constraintTop_toTopOf="@+id/senderAvatar"
+            app:layout_constraintWidth_max="300dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

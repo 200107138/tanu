@@ -21,13 +21,13 @@ class LoginFragment(private val sharedViewModel: AuthViewModel) : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
-        binding.loginButton.setOnClickListener {
+        binding.signIn.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             sharedViewModel.login(email, password)
         }
 
-        binding.registerButton.setOnClickListener {
+        binding.register.setOnClickListener {
             (activity as AuthActivity).navigateToRegister()
         }
 

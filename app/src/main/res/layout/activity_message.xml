@@ -10,49 +10,78 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ED85FF"
-        tools:context=".ui.main.MessageActivity">
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        tools:context=".ui.messages.MessageActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postInfo"
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:background="@color/black"
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/postMedia"
+                android:layout_width="70dp"
+                android:layout_margin="8dp"
+                app:shapeAppearanceOverlay="@style/RoundedSquare"
+                android:layout_height="70dp"
+                android:src="#DDDDDD"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/postInfo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/postText"
+                android:id="@+id/post_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="postText"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                android:text="desc"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/postMedia"
+                app:layout_constraintStart_toEndOf="@+id/postMedia"
+                app:layout_constraintTop_toTopOf="@+id/postMedia" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Постты ашу"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMessages"
             android:layout_width="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:layout_height="0dp"
-            android:background="#16433F"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/sendMessageEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postInfo" />
 
+
         <EditText
             android:id="@+id/sendMessageEditText"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="#673AB7"
+            android:layout_height="40dp"
+ android:layout_marginEnd="8dp"
+            android:paddingStart="16dp"
+            android:background="@drawable/send_message_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendMessageButton"
             app:layout_constraintStart_toStartOf="parent" />
@@ -61,8 +90,10 @@
             android:id="@+id/sendMessageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_margin="8dp"
+            android:text="Жиберу"
+            app:layout_constraintBottom_toBottomOf="@+id/sendMessageEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sendMessageEditText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

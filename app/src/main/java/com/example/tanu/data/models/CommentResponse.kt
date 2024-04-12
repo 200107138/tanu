@@ -1,3 +1,3 @@
 package com.example.tanu.data.models
 
-data class CommentResponse(val message: String)
+data class CommentResponse(val status: String)

@@ -63,7 +63,6 @@ class MessageAdapter(var messages: List<Message>) :
 
         fun setData(chatMessage: Message) {
             binding.messageText.text = chatMessage.text
-            binding.senderName.text = chatMessage.senderId
         }
     }
     class ReceivedMessageViewHolder(private val binding: ItemRecievedMessageBinding) :
@@ -71,7 +70,6 @@ class MessageAdapter(var messages: List<Message>) :
 
         fun setData(chatMessage: Message) {
             binding.messageText.text = chatMessage.text
-            binding.senderName.text = chatMessage.senderId
         }
     }
 }

@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.tanu.R
 import com.example.tanu.data.models.ChatRoom
 import com.example.tanu.databinding.ItemChatRoomBinding
 
 // ConversationsAdapter.kt
-class ChatRoomsAdapter(private val context: Context, private val onItemClick: (String) -> Unit) : ListAdapter<ChatRoom, ChatRoomsAdapter.ConversationsViewHolder>(DiffCallback()) {
+class ChatRoomsAdapter(private val context: Context, private val onItemClick: (String, String) -> Unit) : ListAdapter<ChatRoom, ChatRoomsAdapter.ConversationsViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationsViewHolder {
         val binding = ItemChatRoomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,17 +31,25 @@ class ChatRoomsAdapter(private val context: Context, private val onItemClick: (S
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val chatRoomId = getItem(position).id
-                    onItemClick(chatRoomId)
+                    val postId = getItem(position).postId
+                    onItemClick(chatRoomId, postId)
                 }
             }
         }
 
-        fun bind(conversation: ChatRoom) {
+        fun bind(chatroom: ChatRoom) {
             binding.apply {
                 // Bind conversation data to views here
-                chatRoomId.text = conversation.id
+                email.text = chatroom.userEmail
+                chatRoomLastMessage.text = chatroom.lastMessage
+                // Load avatar image
+                Glide.with(context)
+                    .load(chatroom.userAvatar)
+                    .into(avatar)
 
-                // Handle other views binding
+                Glide.with(context)
+                    .load(chatroom.postMediaUrls.firstOrNull())
+                    .into(postMedia)
             }
         }
     }

@@ -5,9 +5,13 @@
         android:icon="@drawable/baseline_home_24"
         android:title="Басты бет" />
     <item
-        android:id="@+id/navigation_map"
+        android:id="@+id/navigation_forum"
         android:icon="@drawable/baseline_map_24"
         android:title="Карта" />
+    <item
+        android:id="@+id/navigation_upload"
+        android:icon="@drawable/baseline_add_circle_outline_24"
+        android:title="Upload" />
     <item
         android:id="@+id/navigation_conversations"
         android:icon="@drawable/baseline_message_24"

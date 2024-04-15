@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tanu.R
 import com.example.tanu.SessionManager
 import com.example.tanu.data.adapters.PostListAdapter
-import com.example.tanu.data.adapters.ProfilePostAdapter
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.ActivityLeaderboardBinding

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Tanu"
         tools:targetApi="34">
         <activity
+            android:name=".ui.main.PostActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.SinglePostActivity"
             android:exported="false" />
         <activity

@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tanu.SessionManager
-import com.example.tanu.data.adapters.ProfilePostAdapter
+import com.example.tanu.data.adapters.PostListAdapter
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.ActivityProfileBinding
@@ -15,7 +15,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var profilePostAdapter: ProfilePostAdapter
+    private lateinit var profilePostAdapter: PostListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class ProfileActivity : AppCompatActivity() {
             ProfileViewModel::class.java)
 
         // Initialize RecyclerView adapter
-        profilePostAdapter = ProfilePostAdapter(this)
+        profilePostAdapter = PostListAdapter(this)
 
         // Set RecyclerView adapter
         binding.recyclerView.adapter = profilePostAdapter

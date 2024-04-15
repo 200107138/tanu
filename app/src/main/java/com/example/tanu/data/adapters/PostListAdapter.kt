@@ -12,22 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanu.R
 import com.example.tanu.data.models.Post
-import com.example.tanu.databinding.ItemPostBinding
 import com.example.tanu.databinding.ItemPostListBinding
-import com.example.tanu.ui.main.SinglePostActivity
+import com.example.tanu.ui.main.PostActivity
 
 class PostListAdapter(private val context: Context) :
     ListAdapter<Post, PostListAdapter.PostViewHolder>(PostDiffCallback()) {
-
     inner class PostViewHolder(private val binding: ItemPostListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val context = binding.root.context
-                    val intent = Intent(context, SinglePostActivity::class.java).apply {
-                        putExtra("position", position)
-                        putExtra("posts", ArrayList(currentList))
+                    val intent = Intent(context, PostActivity::class.java).apply {
+                        putExtra("post", post)
                     }
                     context.startActivity(intent)
                 }
@@ -73,9 +70,13 @@ class PostListAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = getItem(position)
+        val post = getItem(position) // Use getItem(position) to get the post at the given position
         holder.bind(post)
     }
+    fun setPosts(posts: List<Post>) {
+        submitList(posts)
+    }
+
 }
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {

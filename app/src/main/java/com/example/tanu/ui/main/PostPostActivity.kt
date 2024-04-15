@@ -85,6 +85,7 @@ class PostPostActivity : AppCompatActivity() {
 
 
     private fun uploadToServer() {
+        val description = binding.postCaptionInput.text.toString()
         // Convert Uri images to MultipartBody.Part
         val list: MutableList<MultipartBody.Part> = ArrayList()
         for (uri in images) {
@@ -92,7 +93,7 @@ class PostPostActivity : AppCompatActivity() {
         }
 
         // Call ViewModel function to upload images
-        viewModel.postPost(list.toTypedArray(), "Post description")
+        viewModel.postPost(list.toTypedArray(), description)
     }
     private fun prepairFiles(partName: String, fileUri: Uri): MultipartBody.Part {
         val contentResolver = contentResolver

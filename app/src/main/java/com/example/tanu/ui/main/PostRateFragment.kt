@@ -102,7 +102,7 @@ class PostRateFragment : Fragment() {
             }
         })
         binding.commentButton.setOnClickListener {
-            val commentText = binding.editText.text.toString().trim()
+            val commentText = binding.editText.text.toString()
             if (commentText.isNotEmpty()) {
                 viewModel.postComment(post.id, commentText)
             }

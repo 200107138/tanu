@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.tanu.R
 import com.example.tanu.SessionManager
-import com.example.tanu.data.adapters.PostAdapter
+import com.example.tanu.data.adapters.PostListAdapter
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.FragmentHomeBinding
@@ -21,7 +22,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var postAdapter: PostAdapter
+    private lateinit var postAdapter: PostListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,8 +40,8 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this, HomeViewModelFactory(repository)).get(HomeViewModel::class.java)
 
         // Initialize ViewPager2 adapter
-        postAdapter = PostAdapter(requireContext())
-
+        postAdapter = PostListAdapter(requireContext())
+        binding.posts.layoutManager = GridLayoutManager(requireContext(), 3)
         // Set ViewPager2 adapter
         binding.posts.adapter = postAdapter
 
@@ -51,7 +52,6 @@ class HomeFragment : Fragment() {
                 postAdapter.setPosts(posts)
             }
         })
-
         // Call getPosts API
         viewModel.getPosts()
     }

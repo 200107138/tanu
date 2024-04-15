@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.tanu.SessionManager
 import com.example.tanu.data.UserHolder
-import com.example.tanu.data.adapters.ProfilePostAdapter
+import com.example.tanu.data.adapters.PostListAdapter
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.FragmentProfileBinding
@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var profilePostAdapter: ProfilePostAdapter
+    private lateinit var profilePostAdapter: PostListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,17 +45,14 @@ class ProfileFragment : Fragment() {
             ProfileViewModel::class.java)
 
         // Initialize RecyclerView adapter
-        profilePostAdapter = ProfilePostAdapter(requireContext())
+        profilePostAdapter = PostListAdapter(requireContext())
 
         // Set RecyclerView adapter
         binding.recyclerView.adapter = profilePostAdapter
 
         // Set GridLayoutManager with spanCount 3
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.leaderboard.setOnClickListener {
-            // Open LeaderboardActivity
-            startActivity(Intent(requireContext(), LeaderboardActivity::class.java))
-        }
+
         // Observe postsLiveData
         viewModel.postsLiveData.observe(viewLifecycleOwner, Observer { posts ->
             posts?.let {

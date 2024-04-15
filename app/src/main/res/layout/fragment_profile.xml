@@ -11,31 +11,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#FFFFFF"
+
         android:gravity="center_horizontal"
         tools:context=".ui.profile.ProfileFragment">
 
-        <ImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/circle_shape"
-            android:scaleType="centerCrop"
-            android:layout_margin="16dp"
+            android:src="#DADADA"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
-
-        <ImageView
-            android:id="@+id/leaderboard"
-            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:shapeAppearanceOverlay="@style/Circular" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-
-            android:src="@drawable/outline_leaderboard_24"
+            android:background="#2196F3"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Орташа рейтинг:"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
@@ -45,37 +65,20 @@
 
             app:layout_constraintEnd_toEndOf="@+id/avatar"
             app:layout_constraintStart_toStartOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatar"
             tools:text="email" />
 
-        <ImageView
-            android:id="@+id/profile_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/baseline_exit_to_app_24"
-            android:text="Шыгу"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/materialDivider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
+            app:layout_constraintTop_toBottomOf="@+id/email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

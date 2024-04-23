@@ -10,4 +10,5 @@ data class Discussion(
     @SerializedName("user_id") val userId: String,
     @SerializedName("user_avatar_url") val userAvatarUrl: String,
     @SerializedName("user_email") val userEmail: String,
+    @SerializedName("category_id") val categoryId: String,
 )

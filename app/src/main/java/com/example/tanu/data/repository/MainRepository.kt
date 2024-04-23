@@ -26,6 +26,7 @@ import com.example.tanu.data.models.PostDiscussionRequest
 import com.example.tanu.data.models.PostDiscussionResponse
 import com.example.tanu.data.models.PostMessageRequest
 import com.example.tanu.data.models.PostMessageResponse
+import com.example.tanu.data.models.PostPostResponse
 import com.example.tanu.data.models.PostRateResponse
 import com.example.tanu.data.models.PostRateRequest
 import okhttp3.MultipartBody
@@ -252,9 +253,15 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
     }
 
 
-    suspend fun postPost(mediaParts: Array<MultipartBody.Part?>, description: String): PostRateResponse? {
+    suspend fun postPost(
+        mediaParts: Array<MultipartBody.Part?>,
+        description: String,
+        title: String,
+        telDonation: Long,
+        cardDonation: Long
+    ): PostPostResponse? {
         try {
-            val response = apiService.postPost(mediaParts, description)
+            val response = apiService.postPost(mediaParts, description, title, telDonation, cardDonation)
             return if (response.isSuccessful) {
                 response.body() // Return the response body
             } else {
@@ -265,6 +272,7 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
             throw e
         }
     }
+
 
     suspend fun getLeaderboardPosts(): GetLeaderboardPostsResponse? {
         try {

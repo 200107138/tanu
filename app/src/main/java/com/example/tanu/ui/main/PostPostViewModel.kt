@@ -16,11 +16,11 @@ class PostPostViewModel(private val repository: MainRepository) : ViewModel() {
         get() = _uploadStatus
 
 
-    fun postPost(mediaParts: Array<MultipartBody.Part?>, description: String) {
+    fun postPost(mediaParts: Array<MultipartBody.Part?>, description: String, title: String, telDonation: Long, cardDonation: Long) {
         Log.e(ContentValues.TAG, "uploadPost apiviewmodel called")
         viewModelScope.launch {
             try {
-                val response = repository.postPost(mediaParts, description)
+                val response = repository.postPost(mediaParts, description,title,telDonation,cardDonation)
                 Log.d(ContentValues.TAG, "PostPost API response status: ${response?.status}")
             } catch (e: Exception) {
                 // Handle exceptions here if needed

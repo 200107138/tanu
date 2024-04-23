@@ -17,6 +17,7 @@ import com.example.tanu.ui.main.PostActivity
 
 class PostListAdapter(private val context: Context) :
     ListAdapter<Post, PostListAdapter.PostViewHolder>(PostDiffCallback()) {
+
     inner class PostViewHolder(private val binding: ItemPostListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.root.setOnClickListener {
@@ -33,12 +34,12 @@ class PostListAdapter(private val context: Context) :
             binding.post = post
 
             // Set description text with a limit of 20 characters
-            val descText = if (post.description.length > 20) {
-                post.description.substring(0, 20) + "..." // Limit to 20 characters
+            val titleText = if (!post.title.isNullOrEmpty() && post.title.length > 20) {
+                post.title.substring(0, 20) + "..." // Limit to 20 characters
             } else {
-                post.description
+                post.title
             }
-            binding.desc.text = descText
+            binding.title.text = titleText
 
 
             // Change background color based on rating

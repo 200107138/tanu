@@ -20,12 +20,12 @@
             android:id="@+id/avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="#DADADA"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            app:shapeAppearanceOverlay="@style/Circular" />
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:background="#DADADA"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
             android:layout_width="match_parent"

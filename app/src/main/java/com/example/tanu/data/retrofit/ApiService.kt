@@ -23,6 +23,7 @@ import com.example.tanu.data.models.PostDiscussionRequest
 import com.example.tanu.data.models.PostDiscussionResponse
 import com.example.tanu.data.models.PostMessageRequest
 import com.example.tanu.data.models.PostMessageResponse
+import com.example.tanu.data.models.PostPostResponse
 import com.example.tanu.data.models.PostRateRequest
 import com.example.tanu.data.models.PostRateResponse
 import okhttp3.MultipartBody
@@ -87,8 +88,11 @@ interface ApiService {
     @POST("/postPost")
     suspend fun postPost(
         @Part files: Array<MultipartBody.Part?>,
-        @Part("description") description: String
-    ): Response<PostRateResponse>
+        @Part("description") description: String,
+        @Part("title") title: String,
+        @Part("tel_donation") telDonation: Long,
+        @Part("card_donation") cardDonation: Long
+    ): Response<PostPostResponse>
 
     @GET("/getLeaderboardPosts")
     suspend fun getLeaderboardPosts(): Response<GetLeaderboardPostsResponse>

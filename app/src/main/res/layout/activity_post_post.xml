@@ -18,14 +18,59 @@
             android:id="@+id/post_caption_input"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:layout_below="@+id/title"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="22dp"
             android:layout_marginBottom="10dp"
             android:layout_toStartOf="@id/postThumbnailView"
             android:gravity="top"
             android:hint="Write your caption here"
             android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/postThumbnailView"
+            android:gravity="top"
+            android:hint="title"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/telDonation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="345dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/postThumbnailView"
+            android:gravity="top"
+            android:hint="telDonation"
+            android:inputType="number"
+        android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/cardDonation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="450dp"
+            android:layout_marginEnd="-13dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/postThumbnailView"
+            android:gravity="top"
+            android:hint="cardDonation"
+            android:inputType="number"
+        android:padding="10dp" />
 
         <ImageView
             android:id="@+id/postThumbnailView"

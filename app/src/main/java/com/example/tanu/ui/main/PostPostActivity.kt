@@ -86,6 +86,12 @@ class PostPostActivity : AppCompatActivity() {
 
     private fun uploadToServer() {
         val description = binding.postCaptionInput.text.toString()
+        val title = binding.title.text.toString()
+
+        // Parse telDonation and cardDonation directly as Long
+        val telDonation = binding.telDonation.text.toString().toLong()
+        val cardDonation = binding.cardDonation.text.toString().toLong()
+
         // Convert Uri images to MultipartBody.Part
         val list: MutableList<MultipartBody.Part> = ArrayList()
         for (uri in images) {
@@ -93,8 +99,9 @@ class PostPostActivity : AppCompatActivity() {
         }
 
         // Call ViewModel function to upload images
-        viewModel.postPost(list.toTypedArray(), description)
+        viewModel.postPost(list.toTypedArray(), description, title, telDonation, cardDonation)
     }
+
     private fun prepairFiles(partName: String, fileUri: Uri): MultipartBody.Part {
         val contentResolver = contentResolver
         val inputStream = contentResolver.openInputStream(fileUri)

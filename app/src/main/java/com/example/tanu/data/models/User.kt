@@ -6,5 +6,7 @@ data class User(
     @SerializedName("_id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("email") val email: String,
-    @SerializedName("avatar_url") val avatarUrl: String
+    @SerializedName("rating") val rating: Double,
+    @SerializedName("posts_rated") val postsRated: Int,
+    @SerializedName("avatar_url") val avatarUrl: String?
 )

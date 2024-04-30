@@ -2,8 +2,8 @@ package com.example.tanu.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ChatRoomResponse(
+data class GetPostsRatedResponse(
     @SerializedName("status") val status: String,
     @SerializedName("message") val message: String,
-    @SerializedName("chat_rooms") val chatRooms: List<ChatRoom>
+    @SerializedName("postsRated") val postsRated: Int
 )

@@ -12,14 +12,15 @@
 
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/avatar"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userAvatar"
             android:layout_width="60dp"
-            android:layout_marginLeft="16dp"
             android:layout_height="60dp"
-            android:background="@drawable/circle_shape"
+            android:layout_margin="16dp"
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:src="@drawable/avatar_holder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/postMedia" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -27,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/avatar"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="@+id/avatar">
+            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
+            app:layout_constraintStart_toEndOf="@+id/userAvatar"
+            app:layout_constraintTop_toTopOf="@+id/userAvatar">
 
             <TextView
                 android:textSize="20dp"
@@ -52,7 +53,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/postMedia"
+            android:id="@+id/postAvatar"
             android:layout_width="70dp"
             android:layout_height="70dp"
 android:layout_margin="16dp"

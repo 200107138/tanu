@@ -8,45 +8,63 @@
             type="com.example.tanu.data.models.Discussion" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <ImageView
+    <RelativeLayout
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        >
+
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/circle_shape"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:src="@drawable/avatar_holder"
+            />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/user_avatar"
+            android:layout_alignBottom="@id/user_avatar"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:layout_toEndOf="@id/user_avatar"
+            android:text="name"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/discussion_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:text="discussion_title"
             android:textStyle="bold"
-            android:text="discussion title"
-            app:layout_constraintStart_toEndOf="@+id/user_avatar"
-            app:layout_constraintTop_toTopOf="@+id/user_avatar"></TextView>
+            android:textSize="20dp"
+            android:layout_marginTop="8dp"
+
+            android:textColor="@color/black"
+            android:layout_below="@id/user_avatar"
+            android:layout_alignStart="@id/user_avatar" />
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/discussionDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="email"
-            app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
-            app:layout_constraintStart_toEndOf="@+id/user_avatar"></TextView>
+            android:text="discussion_description"
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/materialDivider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/black"
+            android:layout_below="@id/discussion_title"
+            android:layout_alignStart="@id/user_avatar" />
+    </RelativeLayout>
 </layout>

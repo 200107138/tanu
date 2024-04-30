@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.tanu.SessionManager
 import com.example.tanu.data.adapters.DiscussionCommentAdapter
 import com.example.tanu.data.models.Discussion
@@ -53,24 +54,25 @@ class DiscussionActivity : AppCompatActivity() {
         viewModel.getDiscussionInfo(discussionId)
         viewModel.discussionInfoLiveData.observe(this, Observer { discussion ->
             discussion?.let {
-                binding.title.text = discussion.title
-                binding.text.text = discussion.text
-                viewModel.getUserInfo(discussion.userId)
+                binding.discussionTitle.text = discussion.title
+                binding.discussionDesc.text = discussion.description
+                binding.name.text = discussion.user.name
+                if(discussion.user.avatarUrl != null){
+                    Glide.with(binding.root)
+                        .load(discussion.user.avatarUrl)
+                        .into(binding.userAvatar)
+                }
             }
         })
 
-        viewModel.userInfoLiveData.observe(this, Observer { user ->
-            user?.let {
-                binding.email.text = user.email
-            }
-        })
+
 
         // Set up button click listener to add a new comment
         binding.button.setOnClickListener {
             val commentText = binding.editText.text.toString().trim()
             if (commentText.isNotEmpty()) {
                 viewModel.postDiscussionComment(discussionId, commentText)
-                binding.editText.text.clear() // Clear the EditText after adding the comment
+                binding.editText.text?.clear() // Clear the EditText after adding the comment
             } else {
                 Toast.makeText(this, "Please enter a comment", Toast.LENGTH_SHORT).show()
             }

@@ -6,8 +6,6 @@ import java.util.Date
 data class DiscussionComment(
     @SerializedName("_id") val id: String,
     @SerializedName("text") val text: String,
-    @SerializedName("user_id") val userId: String,
+    @SerializedName("user") val user: User,
     @SerializedName("date") val date: Date,
-    @SerializedName("user_avatar") val userAvatar: String,
-    @SerializedName("user_email") val userEmail: String
 )

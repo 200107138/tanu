@@ -11,74 +11,163 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
+android:background="#EDEFF1"
         android:gravity="center_horizontal"
         tools:context=".ui.profile.ProfileFragment">
 
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/avatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            app:shapeAppearanceOverlay="@style/Circular"
-            android:background="#DADADA"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#2196F3"
             android:padding="16dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+<TextView
+    android:id="@+id/editNameButton"
+    android:layout_width="wrap_content"
+    android:text="озгерту"
+    android:layout_alignParentEnd="true"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    android:layout_height="wrap_content"></TextView>
 
-            <TextView
-                android:id="@+id/textView6"
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/avatar_holder"
+
+                app:shapeAppearanceOverlay="@style/Circular" />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Орташа рейтинг:"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                android:id="@+id/info"
 
-            <TextView
-                android:id="@+id/score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView6"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/avatar"
+                android:gravity="start|center"
+                android:orientation="vertical">
 
-            app:layout_constraintEnd_toEndOf="@+id/avatar"
-            app:layout_constraintStart_toStartOf="@+id/avatar"
-            app:layout_constraintTop_toBottomOf="@+id/avatar"
-            tools:text="email" />
+                <TextView
+                    android:id="@id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="name"
 
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+                <TextView
+                    android:id="@id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="email"></TextView>
+            </LinearLayout>
+<com.google.android.material.button.MaterialButton
+    android:layout_width="match_parent"
+    android:text="жуктеу"
+
+    android:layout_below="@+id/info"
+    android:layout_height="wrap_content"></com.google.android.material.button.MaterialButton>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/white"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="vertical"
+       android:padding="16dp"
+       android:background="@color/white"
+       android:layout_height="wrap_content">
+       <TextView
+           android:layout_width="wrap_content"
+           android:text="посттарыныз"
+           android:textStyle="bold"
+           android:textSize="20dp"
+           android:textColor="@color/black"
+           android:layout_height="wrap_content"></TextView>
+
+ <RelativeLayout
+     android:id="@+id/activePosts"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+     <TextView
+         android:layout_width="wrap_content"
+         android:text="белсендилер"
+android:layout_marginTop="16dp"
+         android:textColor="@color/black"
+         android:layout_marginBottom="15dp"
+         android:id="@+id/activeTextView"
+         android:layout_height="wrap_content"></TextView>
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_alignParentEnd="true"
+         android:layout_alignTop="@+id/activeTextView"
+         android:layout_alignBottom="@+id/activeTextView"
+         android:src="@drawable/baseline_chevron_right_24"
+         android:layout_height="wrap_content"></ImageView>
+     <com.google.android.material.divider.MaterialDivider
+         android:layout_width="match_parent"
+         android:layout_below="@+id/activeTextView"
+         android:layout_height="1dp"></com.google.android.material.divider.MaterialDivider>
+ </RelativeLayout>
+       <RelativeLayout
+           android:id="@+id/inactivePosts"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <TextView
+           android:layout_width="wrap_content"
+           android:text="белсенди еместер"
+           android:layout_marginTop="16dp"
+           android:layout_marginBottom="16dp"
+           android:textColor="@color/black"
+           android:id="@+id/inactiveTextView"
+           android:layout_height="wrap_content"></TextView>
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_alignParentEnd="true"
+           android:layout_alignTop="@+id/inactiveTextView"
+           android:layout_alignBottom="@+id/inactiveTextView"
+           android:src="@drawable/baseline_chevron_right_24"
+           android:layout_height="wrap_content"></ImageView>
+       <com.google.android.material.divider.MaterialDivider
+           android:layout_width="match_parent"
+           android:layout_below="@+id/inactiveTextView"
+           android:layout_height="1dp"></com.google.android.material.divider.MaterialDivider>
+   </RelativeLayout>
+   </LinearLayout>
+
+            <TextView
+                android:id="@+id/quit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+
+                android:text="Шыгу"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

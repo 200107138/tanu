@@ -10,4 +10,13 @@
     <color name="green">#4CAF50</color>
     <color name="yellow">#FFEB3B</color>
     <color name="red">#F44336</color>
+    <color name="blue">#2196F3</color>
+    <color name="light_blue">#2196F3</color>
+    <color name="gray">#F0F3F4</color>
+    <color name="dark_gray">#4C555A</color>
+    <color name="rating_five">#BCE1FF</color>
+    <color name="rating_four">#BEFFC1</color>
+    <color name="rating_three">#FFF8BE</color>
+    <color name="rating_two">#FFCCBC</color>
+    <color name="rating_one">#FFBFBA</color>
 </resources>

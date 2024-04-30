@@ -1,87 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-android:id="@+id/main"
-    tools:context=".ui.main.PostRateFragment">
-
-    <ImageView
-        android:id="@+id/rateImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text="Сіздің бағаңыз"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"/>
 
-        <!-- TextView on the left side -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="15dp">
 
-        <!-- TextView on the right side -->
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="1"
+            android:layout_margin="8dp"
+            android:textColor="@color/black"
+android:id="@+id/button1"
+            android:textSize="20dp"
+            android:backgroundTint="@color/gray" />
 
-        <!-- TextView "Your Rate" in the center -->
-        <TextView
-            android:id="@+id/textViewCenter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:text="Сиздин баганыз"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="2"
+            android:layout_margin="8dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:backgroundTint="@color/gray" />
 
-        <!-- RangeSlider -->
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:max="4"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewCenter" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="3"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/gray" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="4"
+            android:layout_margin="8dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:backgroundTint="@color/gray" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="пікір қалдыру"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar">
-
-            <!--this is the actual edit text which takes the input-->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/commentButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Жиберу"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="5"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/gray" />
+    </LinearLayout>
 
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filledTextField"></Button>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</LinearLayout>

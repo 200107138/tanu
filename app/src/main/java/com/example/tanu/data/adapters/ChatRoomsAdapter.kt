@@ -3,13 +3,17 @@ package com.example.tanu.data.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanu.R
+import com.example.tanu.data.UserHolder
 import com.example.tanu.data.models.ChatRoom
+import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.databinding.ItemChatRoomBinding
+import kotlinx.coroutines.launch
 
 // ConversationsAdapter.kt
 class ChatRoomsAdapter(private val context: Context, private val onItemClick: (String, String) -> Unit) : ListAdapter<ChatRoom, ChatRoomsAdapter.ConversationsViewHolder>(DiffCallback()) {
@@ -31,7 +35,7 @@ class ChatRoomsAdapter(private val context: Context, private val onItemClick: (S
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val chatRoomId = getItem(position).id
-                    val postId = getItem(position).postId
+                    val postId = getItem(position).post.id
                     onItemClick(chatRoomId, postId)
                 }
             }
@@ -39,17 +43,29 @@ class ChatRoomsAdapter(private val context: Context, private val onItemClick: (S
 
         fun bind(chatroom: ChatRoom) {
             binding.apply {
-                // Bind conversation data to views here
-                email.text = chatroom.userEmail
+                val currentUserId = UserHolder.userId
+                val otherUserId = if (chatroom.receiver.id == currentUserId) {
+                    chatroom.sender.email
+                } else {
+                    chatroom.receiver.email
+                }
+                email.text = otherUserId
                 chatRoomLastMessage.text = chatroom.lastMessage
-                // Load avatar image
-                Glide.with(context)
-                    .load(chatroom.userAvatar)
-                    .into(avatar)
 
+                // Set the image sources using Glide
                 Glide.with(context)
-                    .load(chatroom.postMediaUrls.firstOrNull())
-                    .into(postMedia)
+                    .load(chatroom.post.mediaUrls[0]) // Assuming mediaUrl is a list
+                    .into(binding.postAvatar)
+
+                if (chatroom.receiver.id == currentUserId && chatroom.sender.avatarUrl != null) {
+                    Glide.with(context)
+                        .load(chatroom.sender.avatarUrl)
+                        .into(binding.userAvatar)
+                } else if (chatroom.receiver.id != currentUserId && chatroom.receiver.avatarUrl != null) {
+                    Glide.with(context)
+                        .load(chatroom.receiver.avatarUrl)
+                        .into(binding.userAvatar)
+                }
             }
         }
     }

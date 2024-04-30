@@ -21,9 +21,6 @@ class DiscussionViewModel(private val repository: MainRepository) : ViewModel() 
     private val _discussionInfoLiveData: MutableLiveData<Discussion> = MutableLiveData()
     val discussionInfoLiveData: LiveData<Discussion> = _discussionInfoLiveData
 
-    private val _userInfoLiveData: MutableLiveData<User> = MutableLiveData()
-    val userInfoLiveData: LiveData<User> = _userInfoLiveData
-
     private val _postCommentStatus: MutableLiveData<Boolean> = MutableLiveData()
     val postCommentStatus: LiveData<Boolean> = _postCommentStatus
 
@@ -72,21 +69,5 @@ class DiscussionViewModel(private val repository: MainRepository) : ViewModel() 
             }
         }
     }
-
-    fun getUserInfo(userId: String) {
-        viewModelScope.launch {
-            try {
-                val response = repository.getUserInfo(userId)
-                if (response?.status == "success") {
-                    _userInfoLiveData.postValue(response.user)
-                } else {
-                    // Handle error or empty response
-                }
-            } catch (e: Exception) {
-                // Handle network or other errors
-            }
-        }
-    }
-
 
 }

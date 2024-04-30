@@ -19,20 +19,19 @@ import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.FragmentPostDescriptionBinding
 import com.example.tanu.ui.messages.MessageActivity
+import com.example.tanu.ui.profile.ProfileActivity
 
 class PostDescriptionFragment : Fragment() {
 
-    private var _binding: FragmentPostDescriptionBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentPostDescriptionBinding
     private lateinit var viewModel: PostDescriptionViewModel
-    private lateinit var post: Post
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPostDescriptionBinding.inflate(inflater, container, false)
+        binding = FragmentPostDescriptionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,55 +42,42 @@ class PostDescriptionFragment : Fragment() {
         val repository = MainRepository(apiClient.getApiService(requireContext()), sessionManager)
         viewModel = ViewModelProvider(this, PostDescriptionViewModelFactory(repository)).get(
             PostDescriptionViewModel::class.java)
-        post = arguments?.getSerializable(POST_KEY) as? Post ?: return
 
-        // Set description text
-        binding.postDesctiption.text = post.description
+        val postId = arguments?.getString("postId") ?: ""
 
-        // Call the getUserInfo API
-        viewModel.getUserInfo(post.userId)
+        // Call the getPostInfo API
+        viewModel.getPostInfo(postId)
 
-        // Observe the getUserInfo LiveData
-        viewModel.userInfoLiveData.observe(viewLifecycleOwner) { response ->
-            if (response.status == "success") {
-                // Update the UI with user info
-                binding.email.text = response.user.email
-                Glide.with(this).load(response.user.avatarUrl).into(binding.avatar)
-            } else {
-                // Handle error
+        // Observe the getPostInfo LiveData
+        viewModel.postInfoLiveData.observe(viewLifecycleOwner) { post ->
+            // Update the UI with post info
+            binding.description.text = post.description
+            binding.email.text = post.user.email
+            // Set click listener for message button
+            binding.messageButton.setOnClickListener {
+                // Create an Intent to start the MessageActivity
+                val intent = Intent(requireContext(), MessageActivity::class.java)
+                intent.putExtra("postId", post.id)
+                intent.putExtra("receiverId", post.user.id)
+                // Start the MessageActivity
+                startActivity(intent)
+            }
+            binding.avatar.setOnClickListener {
+                val profileIntent = Intent(requireContext(), ProfileActivity::class.java)
+                profileIntent.putExtra("userId", post.user.id)
+                startActivity(profileIntent)
             }
         }
-
-
-        // Set click listener for message button
-        binding.messageButton.setOnClickListener {
-            // Create an Intent to start the MessageActivity
-            val intent = Intent(requireContext(), MessageActivity::class.java)
-            // Put the Post object as an extra in the Intent bundle
-            intent.putExtra("post", post)
-            intent.putExtra("postId", post.id)
-            // Start the MessageActivity
-            startActivity(intent)
-        }
-
-
-
-        val mediaAdapter = PostMediaAdapter(post.mediaUrls)
-        binding.mediaViewPager.adapter = mediaAdapter
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {
-        private const val POST_KEY = "post_key"
+        private const val POST_ID_KEY = "postId"
 
-        fun newInstance(post: Post?): PostDescriptionFragment {
+        fun newInstance(postId: String): PostDescriptionFragment {
             val fragment = PostDescriptionFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(POST_KEY, post)
+            val bundle = Bundle().apply {
+                putString(POST_ID_KEY, postId)
+            }
             fragment.arguments = bundle
             return fragment
         }

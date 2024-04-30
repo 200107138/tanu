@@ -11,14 +11,14 @@
 
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/senderAvatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="16dp"
-            android:background="@drawable/circle_shape"
-
-
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:src="@drawable/avatar_holder"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

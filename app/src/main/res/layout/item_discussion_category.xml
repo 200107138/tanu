@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:id="@+id/categoryLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/rounded_rectangle_background"
+            android:backgroundTint="@color/gray"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/categoryImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"></ImageView>
+
+            <TextView
+                android:id="@+id/categoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="category name"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

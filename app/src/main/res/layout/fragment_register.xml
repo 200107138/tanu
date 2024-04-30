@@ -31,85 +31,36 @@
                 android:textStyle="bold"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Туған күніңіз"
-                android:textSize="16dp"
-                android:layout_gravity="start" />
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="4dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Ай"
-                    android:layout_weight="1"
-                    android:padding="12dp"
-                    android:textColor="@color/black"
-                    android:background="#EFEFEF" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Күн"
-                    android:layout_weight="1"
-                    android:padding="12dp"
-                    android:layout_marginLeft="4dp"
-                    android:textColor="@color/black"
-                    android:background="#EFEFEF" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Жыл"
-                    android:layout_weight="1"
-                    android:padding="12dp"
-                    android:layout_marginLeft="4dp"
-                    android:textColor="@color/black"
-                    android:background="#EFEFEF" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Пошта"
-                android:textSize="16dp"
-                android:layout_gravity="start"
-                android:layout_marginTop="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Поштаныз"
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditText"
-                    android:layout_weight="1"
-                    android:padding="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Поштаныз"
+                    android:layout_marginTop="16dp"
                     android:background="#EFEFEF"
-                    android:layout_marginLeft="4dp" />
-            </LinearLayout>
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordTextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Құпия сөз"
-                android:textSize="18dp"
-                android:id="@+id/passwordEditText"
-                android:padding="15dp"
-                android:layout_marginTop="10dp"
-                android:background="#EFEFEF" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Құпия сөз"
+                    android:background="#EFEFEF"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/signup"
@@ -117,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:padding="15dp"
+
                 android:text="Жалғастыру"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

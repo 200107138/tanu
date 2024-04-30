@@ -6,17 +6,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tanu.data.models.GetUserInfoResponse
 import com.example.tanu.data.models.Post
+import com.example.tanu.data.models.PutUserNameRequest
 import com.example.tanu.data.repository.MainRepository
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val repository: MainRepository) : ViewModel() {
+class ProfileViewModel(val repository: MainRepository) : ViewModel() {
 
     private val _postsLiveData: MutableLiveData<List<Post>> = MutableLiveData()
     val postsLiveData: LiveData<List<Post>> = _postsLiveData
-
     private val _userInfoLiveData: MutableLiveData<GetUserInfoResponse> = MutableLiveData()
     val userInfoLiveData: LiveData<GetUserInfoResponse> = _userInfoLiveData
+    private val _putUserNameResultLiveData: MutableLiveData<String> = MutableLiveData()
+    val putUserNameResultLiveData: LiveData<String> = _putUserNameResultLiveData
 
+    fun putUserName(newName: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.putUserName(PutUserNameRequest(newName))
+                if (response.isSuccessful) {
+                    _putUserNameResultLiveData.postValue("success")
+                } else {
+                    _putUserNameResultLiveData.postValue("error")
+                }
+            } catch (e: Exception) {
+                _putUserNameResultLiveData.postValue("error")
+            }
+        }
+    }
     fun getPostsByUserId(userId: String) {
         viewModelScope.launch {
             try {

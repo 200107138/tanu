@@ -3,18 +3,22 @@ package com.example.tanu.data.retrofit
 import com.example.tanu.data.models.LoginResponse
 import com.example.tanu.data.models.RegisterResponse
 import com.example.tanu.data.models.AuthRequest
-import com.example.tanu.data.models.ChatRoomResponse
+import com.example.tanu.data.models.GetChatRoomsResponse
 import com.example.tanu.data.models.GetAllDiscussionResponse
 import com.example.tanu.data.models.GetChatRoomIdResponse
+import com.example.tanu.data.models.GetDiscussionCategoriesResponse
 import com.example.tanu.data.models.GetDiscussionCommentsByIdResponse
 import com.example.tanu.data.models.GetDiscussionInfo
 import com.example.tanu.data.models.GetDiscussionsByPostIdResponse
 import com.example.tanu.data.models.GetLeaderboardPostsResponse
 import com.example.tanu.data.models.GetMessagesResponse
+import com.example.tanu.data.models.GetPostCategoriesResponse
 import com.example.tanu.data.models.GetPostInfoResponse
+import com.example.tanu.data.models.GetPostRatingResponse
+import com.example.tanu.data.models.GetPostsRatedResponse
 import com.example.tanu.data.models.GetPostsResponse
-import com.example.tanu.data.models.GetReviewByPostIdAndUserIdResponse
 import com.example.tanu.data.models.GetUserInfoResponse
+import com.example.tanu.data.models.GetUserPostsResponse
 import com.example.tanu.data.models.PostCommentRequest
 import com.example.tanu.data.models.PostCommentResponse
 import com.example.tanu.data.models.PostDiscussionCommentRequest
@@ -26,12 +30,17 @@ import com.example.tanu.data.models.PostMessageResponse
 import com.example.tanu.data.models.PostPostResponse
 import com.example.tanu.data.models.PostRateRequest
 import com.example.tanu.data.models.PostRateResponse
+import com.example.tanu.data.models.PutPostStatusRequest
+import com.example.tanu.data.models.PutPostStatusResponse
+import com.example.tanu.data.models.PutUserNameRequest
+import com.example.tanu.data.models.PutUserNameResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -44,7 +53,7 @@ interface ApiService {
     suspend fun register(@Body request: AuthRequest): Response<RegisterResponse>
 
     @GET("/getChatRooms")
-    suspend fun getChatRooms(): Response<ChatRoomResponse>
+    suspend fun getChatRooms(): Response<GetChatRoomsResponse>
 
     @GET("/getMessages")
     suspend fun getMessages(@Query("chatRoomId") chatRoomId: String): Response<GetMessagesResponse>
@@ -96,13 +105,36 @@ interface ApiService {
 
     @GET("/getLeaderboardPosts")
     suspend fun getLeaderboardPosts(): Response<GetLeaderboardPostsResponse>
-
-    @GET("/getReviewByPostIdAndUserId")
-    suspend fun getReviewByPostIdAndUserId(@Query("postId") postId: String): Response<GetReviewByPostIdAndUserIdResponse>
-
     @GET("/getChatRoomId")
-    suspend fun getChatRoomId(@Query("userId") userId: String, @Query("postId") postId: String): Response<GetChatRoomIdResponse>
+    suspend fun getChatRoomId(
+        @Query("postId") postId: String,
+        @Query("receiverId") receiverId: String
+    ): Response<GetChatRoomIdResponse>
+
     @GET("/getPostInfo")
     suspend fun getPostInfo(@Query("postId") postId: String): Response<GetPostInfoResponse>
+    @GET("/getPostCategories")
+    suspend fun getPostCategories(): Response<GetPostCategoriesResponse>
 
+    @GET("/getDiscussionCategories")
+    suspend fun getDiscussionCategories(): Response<GetDiscussionCategoriesResponse>
+
+    @GET("/getPostsRated")
+    suspend fun getPostsRated(): Response<GetPostsRatedResponse>
+
+    @GET("/getUserPosts")
+    suspend fun getUserPosts(): Response<GetUserPostsResponse>
+
+    @GET("/getPostRating")
+    suspend fun getPostRating(@Query("postId") postId: String): Response<GetPostRatingResponse>
+
+    @PUT("/putPostStatus")
+    suspend fun putPostStatus(
+        @Body request: PutPostStatusRequest
+    ): Response<PutPostStatusResponse>
+
+    @PUT("/putUserName")
+    suspend fun putUserName(
+        @Body request: PutUserNameRequest
+    ): Response<PutUserNameResponse>
 }

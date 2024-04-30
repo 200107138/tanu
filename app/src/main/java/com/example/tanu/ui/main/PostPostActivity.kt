@@ -1,6 +1,7 @@
 package com.example.tanu.ui.main
 
 
+import android.R
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -9,16 +10,22 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.tanu.SessionManager
+import com.example.tanu.data.adapters.MediaListAdapter
+import com.example.tanu.data.models.PostCategory
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.ActivityPostPostBinding
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -33,7 +40,8 @@ class PostPostActivity : AppCompatActivity() {
     lateinit var binding: ActivityPostPostBinding
     private val images = ArrayList<Uri>()
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
-
+    private var categoryList = listOf<PostCategory>()
+    private lateinit var mediaAdapter: MediaListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostPostBinding.inflate(layoutInflater)
@@ -43,8 +51,14 @@ class PostPostActivity : AppCompatActivity() {
         val repository = MainRepository(apiClient.getApiService(this), sessionManager)
         viewModel = ViewModelProvider(this, PostPostViewModelFactory(repository)).get(PostPostViewModel::class.java)
 
+        viewModel.getPostCategories()
 
-        binding.uploadView.setOnClickListener {
+        viewModel.postCategoriesLiveData.observe(this) { categories ->
+            categoryList = categories // Store the list of categories
+            setCategoryDropdown(categories.map { it.name }) // Pass the list of category names to set up the dropdown
+        }
+
+        binding.uploadMediaLayout.setOnClickListener {
             openPhotoPicker()
         }
         // Initialize ActivityResultLauncher
@@ -75,17 +89,20 @@ class PostPostActivity : AppCompatActivity() {
     }
 
     private fun showPostView() {
-        binding.postView.visibility = View.VISIBLE
-        binding.uploadView.visibility = View.GONE
+        binding.mediaListLayout.visibility = View.VISIBLE
+        binding.uploadMediaLayout.visibility = View.GONE
         if (images.isNotEmpty()) {
-            Glide.with(binding.postThumbnailView).load(images[0])
-                .into(binding.postThumbnailView)
+            mediaAdapter = MediaListAdapter(images)
+            binding.mediaList.apply {
+                layoutManager = LinearLayoutManager(this@PostPostActivity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = mediaAdapter
+            }
         }
     }
 
 
     private fun uploadToServer() {
-        val description = binding.postCaptionInput.text.toString()
+        val description = binding.description.text.toString()
         val title = binding.title.text.toString()
 
         // Parse telDonation and cardDonation directly as Long
@@ -122,6 +139,16 @@ class PostPostActivity : AppCompatActivity() {
         }
         return fileName
     }
+    private fun setCategoryDropdown(categories: List<String>) {
+        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, categories)
+        val categoryDropdown: AutoCompleteTextView = binding.categoryDropdown
+        categoryDropdown.setAdapter(adapter)
 
+        // Set a click listener to handle item selection
+        categoryDropdown.setOnItemClickListener { _, _, position, _ ->
+            val selectedCategory = categoryList[position] // Get the selected category object
+            // Do something with the selected category if needed
+        }
+    }
 
 }

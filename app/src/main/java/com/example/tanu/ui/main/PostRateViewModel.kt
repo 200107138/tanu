@@ -1,46 +1,34 @@
 package com.example.tanu.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tanu.data.models.GetReviewByPostIdAndUserIdResponse
-import com.example.tanu.data.models.PostCommentRequest
 import com.example.tanu.data.models.PostRateRequest
 import com.example.tanu.data.repository.MainRepository
 import kotlinx.coroutines.launch
 
 class PostRateViewModel(private val repository: MainRepository) : ViewModel() {
-    private val _postCommentLiveData = MutableLiveData<String>()
-    val postCommentLiveData: LiveData<String>
-        get() = _postCommentLiveData
-    val commentLiveData: MutableLiveData<GetReviewByPostIdAndUserIdResponse?> = MutableLiveData()
-    fun postComment(postId: String, commentText: String) {
-        viewModelScope.launch {
-            try {
-                val response = repository.postComment(PostCommentRequest(postId, commentText))
-                if (response?.status == "success") {
-                    _postCommentLiveData.value = "success"
-                } else {
-                    _postCommentLiveData.value = "error"
-                }
-            } catch (e: Exception) {
-                _postCommentLiveData.value = "error"
-            }
-        }
-    }
-    fun getReviewByPostIdAndUserId(postId: String) {
-        viewModelScope.launch {
-            try {
-                val response = repository.getReviewByPostIdAndUserId(postId)
 
-                if (response?.status == "success") {
-                    commentLiveData.postValue(response)
+    private val _postRatingLiveData: MutableLiveData<Int> =
+        MutableLiveData()
+    val postRatingLiveData: LiveData<Int> =
+        _postRatingLiveData
+
+    fun getPostRating(postId: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getPostRating(postId)
+                if (response.isSuccessful) {
+                    _postRatingLiveData.postValue(response.body()?.rate)
                 } else {
-                    // Handle error or empty response
+                    // Handle unsuccessful response
+                    Log.e("MessageViewModel", "Unsuccessful response: ${response.code()}")
                 }
             } catch (e: Exception) {
-                // Handle network or other errors
+                // Handle error
+                Log.e("MessageViewModel", "Error getting post info: ${e.message}")
             }
         }
     }

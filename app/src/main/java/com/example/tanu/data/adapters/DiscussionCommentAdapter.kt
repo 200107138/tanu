@@ -13,7 +13,7 @@ class DiscussionCommentAdapter : RecyclerView.Adapter<DiscussionCommentAdapter.D
     inner class DiscussionCommentViewHolder(private val binding: ItemDiscussionCommentBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: DiscussionComment) {
             binding.comment = comment
-            binding.email.text = comment.userEmail
+            binding.name.text = comment.user.name
             binding.discussionCommentText.text = comment.text
             binding.executePendingBindings()
         }

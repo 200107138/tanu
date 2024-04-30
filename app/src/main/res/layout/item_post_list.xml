@@ -18,22 +18,47 @@
             android:layout_height="130dp"
             android:adjustViewBounds="true"
             android:padding="1dp"
+            app:shapeAppearanceOverlay="@style/RoundedSquare"
+            android:src="#EFF2F4"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ratedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_check_24"
+                app:tint="@color/white"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="бағаланды"
+                android:textColor="@color/white"></TextView>
+        </LinearLayout>
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
             android:paddingRight="4dp"
-            android:textStyle="bold"
             android:text="ergergergergergergerergr"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbnail_image_view"></TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>

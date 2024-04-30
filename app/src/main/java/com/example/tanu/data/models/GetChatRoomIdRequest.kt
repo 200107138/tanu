@@ -1,4 +1,6 @@
 package com.example.tanu.data.models
 
-class GetChatRoomIdRequest {
-}
+data class GetChatRoomIdRequest(
+    val postId: String,
+    val receiverId: String
+)

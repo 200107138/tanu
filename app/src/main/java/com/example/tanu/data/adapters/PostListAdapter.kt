@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -25,7 +26,7 @@ class PostListAdapter(private val context: Context) :
                 if (position != RecyclerView.NO_POSITION) {
                     val context = binding.root.context
                     val intent = Intent(context, PostActivity::class.java).apply {
-                        putExtra("post", post)
+                        putExtra("postId", post.id)
                     }
                     context.startActivity(intent)
                 }
@@ -41,7 +42,6 @@ class PostListAdapter(private val context: Context) :
             }
             binding.title.text = titleText
 
-
             // Change background color based on rating
             val ratingColor = when {
                 post.rating >= 4 -> ContextCompat.getColor(context, R.color.green) // Green for ratings >= 4
@@ -51,6 +51,13 @@ class PostListAdapter(private val context: Context) :
 
             // Set stroke color for ShapeableImageView
             binding.thumbnailImageView.strokeColor = ColorStateList.valueOf(ratingColor)
+
+            // Check if the post is rated
+            if (post.rated) {
+                binding.ratedLayout.visibility = View.VISIBLE // Show the rated layout
+            } else {
+                binding.ratedLayout.visibility = View.GONE // Hide the rated layout
+            }
 
             // Check if there are media URLs available
             if (post.mediaUrls.isNotEmpty()) {
@@ -63,6 +70,7 @@ class PostListAdapter(private val context: Context) :
             binding.executePendingBindings()
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)

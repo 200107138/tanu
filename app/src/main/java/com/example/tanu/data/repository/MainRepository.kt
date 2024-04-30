@@ -3,21 +3,26 @@ package com.example.tanu.data.repository
 import android.util.Log
 import com.example.tanu.SessionManager
 import com.example.tanu.data.models.AuthRequest
-import com.example.tanu.data.models.ChatRoomResponse
+import com.example.tanu.data.models.GetChatRoomsResponse
 import com.example.tanu.data.models.LoginResponse
 import com.example.tanu.data.retrofit.ApiService
 import com.example.tanu.data.UserHolder
 import com.example.tanu.data.models.GetAllDiscussionResponse
 import com.example.tanu.data.models.GetChatRoomIdResponse
+
+import com.example.tanu.data.models.GetDiscussionCategoriesResponse
 import com.example.tanu.data.models.GetDiscussionCommentsByIdResponse
 import com.example.tanu.data.models.GetDiscussionInfo
 import com.example.tanu.data.models.GetDiscussionsByPostIdResponse
 import com.example.tanu.data.models.GetLeaderboardPostsResponse
 import com.example.tanu.data.models.GetMessagesResponse
+import com.example.tanu.data.models.GetPostCategoriesResponse
 import com.example.tanu.data.models.GetPostInfoResponse
+import com.example.tanu.data.models.GetPostRatingResponse
+import com.example.tanu.data.models.GetPostsRatedResponse
 import com.example.tanu.data.models.GetPostsResponse
-import com.example.tanu.data.models.GetReviewByPostIdAndUserIdResponse
 import com.example.tanu.data.models.GetUserInfoResponse
+import com.example.tanu.data.models.GetUserPostsResponse
 import com.example.tanu.data.models.PostCommentRequest
 import com.example.tanu.data.models.PostCommentResponse
 import com.example.tanu.data.models.PostDiscussionCommentRequest
@@ -29,6 +34,10 @@ import com.example.tanu.data.models.PostMessageResponse
 import com.example.tanu.data.models.PostPostResponse
 import com.example.tanu.data.models.PostRateResponse
 import com.example.tanu.data.models.PostRateRequest
+import com.example.tanu.data.models.PutPostStatusRequest
+import com.example.tanu.data.models.PutPostStatusResponse
+import com.example.tanu.data.models.PutUserNameRequest
+import com.example.tanu.data.models.PutUserNameResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 
@@ -67,7 +76,7 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
         }
     }
 
-    suspend fun getChatRooms(): Response<ChatRoomResponse> = apiService.getChatRooms()
+    suspend fun getChatRooms(): Response<GetChatRoomsResponse> = apiService.getChatRooms()
 
     suspend fun getMessages(chatRoomId: String): GetMessagesResponse? {
         try {
@@ -84,9 +93,16 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
     }
 
 
-    suspend fun postMessage(chatRoomId: String, userId: String, postId: String, messageText: String, ): PostMessageResponse? {
+    suspend fun postMessage(chatRoomId: String, receiverId: String, postId: String, messageText: String): PostMessageResponse? {
         try {
-            val response = apiService.postMessage(PostMessageRequest(chatRoomId, userId, postId, messageText))
+            val response = apiService.postMessage(
+                PostMessageRequest(
+                    messageText = messageText, // Specify named argument here
+                    chatRoomId = chatRoomId,
+                    postId = postId,
+                    receiverId = receiverId
+                )
+            )
             return if (response.isSuccessful) {
                 response.body() // Return the response body
             } else {
@@ -97,7 +113,6 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
             throw e
         }
     }
-
     suspend fun getPosts(): GetPostsResponse? {
         try {
             val response = apiService.getPosts()
@@ -287,10 +302,9 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
             throw e
         }
     }
-
-    suspend fun getReviewByPostIdAndUserId(postId: String): GetReviewByPostIdAndUserIdResponse? {
+    suspend fun getChatRoomId(postId: String, receiverId: String): GetChatRoomIdResponse? {
         try {
-            val response = apiService.getReviewByPostIdAndUserId(postId)
+            val response = apiService.getChatRoomId(postId=postId, receiverId=receiverId)
             return if (response.isSuccessful) {
                 response.body() // Return the response body
             } else {
@@ -302,30 +316,18 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
         }
     }
 
-    suspend fun getChatRoomId(userId: String, postId: String): GetChatRoomIdResponse? {
-        try {
-            val response = apiService.getChatRoomId(userId, postId)
-            return if (response.isSuccessful) {
-                response.body() // Return the response body
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error sending message: ${e.message}")
-            throw e
-        }
-    }
-    suspend fun getPostInfo(postId: String): GetPostInfoResponse? {
-        try {
-            val response = apiService.getPostInfo(postId)
-            return if (response.isSuccessful) {
-                response.body() // Return the response body
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error sending message: ${e.message}")
-            throw e
-        }
-    }
+    suspend fun getPostInfo(postId: String): Response<GetPostInfoResponse> = apiService.getPostInfo(postId)
+    suspend fun getPostCategories(): Response<GetPostCategoriesResponse> = apiService.getPostCategories()
+
+    suspend fun getDiscussionCategories(): Response<GetDiscussionCategoriesResponse> = apiService.getDiscussionCategories()
+
+    suspend fun getPostsRated(): Response<GetPostsRatedResponse> = apiService.getPostsRated()
+
+    suspend fun getUserPosts(): Response<GetUserPostsResponse> = apiService.getUserPosts()
+
+    suspend fun getPostRating(postId: String): Response<GetPostRatingResponse> = apiService.getPostRating(postId)
+
+    suspend fun putPostStatus(request: PutPostStatusRequest): Response<PutPostStatusResponse> = apiService.putPostStatus(request)
+
+    suspend fun putUserName(request: PutUserNameRequest): Response<PutUserNameResponse> = apiService.putUserName(request)
 }

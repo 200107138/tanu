@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tanu.SessionManager
-import com.example.tanu.data.adapters.DiscussionAdapter
+import com.example.tanu.data.adapters.DiscussionListAdapter
 import com.example.tanu.data.models.Post
 import com.example.tanu.data.repository.MainRepository
 import com.example.tanu.data.retrofit.ApiClient
@@ -23,15 +23,16 @@ class PostDiscussionFragment : Fragment() {
 
     private lateinit var viewModel: PostDiscussionViewModel
     private lateinit var binding: FragmentPostDiscussionBinding
-    private lateinit var adapter: DiscussionAdapter
-    private lateinit var post: Post
-    companion object {
-        private const val POST_KEY = "post_key"
+    private lateinit var adapter: DiscussionListAdapter
 
-        fun newInstance(post: Post?): PostDiscussionFragment {
+    companion object {
+        private const val POST_ID_KEY = "postId"
+
+        fun newInstance(postId: String): PostDiscussionFragment {
             val fragment = PostDiscussionFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(POST_KEY, post)
+            val bundle = Bundle().apply {
+                putString(POST_ID_KEY, postId)
+            }
             fragment.arguments = bundle
             return fragment
         }
@@ -48,23 +49,14 @@ class PostDiscussionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        post = arguments?.getSerializable(POST_KEY) as? Post ?: return
+        val postId = arguments?.getString("postId") ?: ""
 
         val apiClient = ApiClient()
         val sessionManager = SessionManager(requireContext())
         val repository = MainRepository(apiClient.getApiService(requireContext()), sessionManager)
         viewModel = ViewModelProvider(this, PostDiscussionViewModelFactory(repository)).get(
             PostDiscussionViewModel::class.java)
-
-        // Initialize RecyclerView adapter with item click listener
-        adapter = DiscussionAdapter { discussionId ->
-            // Handle item click here, e.g., open DiscussionActivity
-            // You can start an activity or perform any other action
-            val intent = Intent(requireContext(), DiscussionActivity::class.java)
-            intent.putExtra("discussionId", discussionId)
-            startActivity(intent)
-        }
-
+        adapter = DiscussionListAdapter(requireContext())
         // Set RecyclerView adapter
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -77,12 +69,12 @@ class PostDiscussionFragment : Fragment() {
         })
 
         // Call getDiscussionsByPostId API
-        viewModel.getDiscussionsByPostId(post.id)
+        viewModel.getDiscussionsByPostId(postId)
 
         // Add click listener to submitButton to open NewDiscussionActivity and pass postId into it
         binding.submitButton.setOnClickListener {
-            val intent = Intent(requireContext(), NewDiscussionActivity::class.java)
-            intent.putExtra("postId", post.id)
+            val intent = Intent(requireContext(), NewPostDiscussionActivity::class.java)
+            intent.putExtra("postId", postId)
             startActivity(intent)
         }
     }

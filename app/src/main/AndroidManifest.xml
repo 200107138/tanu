@@ -18,6 +18,15 @@
         android:theme="@style/Theme.Tanu"
         tools:targetApi="34">
         <activity
+            android:name=".ui.profile.ProfileEditUserNameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfilePostListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.NewPostDiscussionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.PostActivity"
             android:exported="false" />
         <activity

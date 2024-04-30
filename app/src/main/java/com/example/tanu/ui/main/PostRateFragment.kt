@@ -1,12 +1,12 @@
 // PostCommentFragment.kt
 package com.example.tanu.ui.main
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,13 +22,16 @@ class PostRateFragment : Fragment() {
     private lateinit var viewModel: PostRateViewModel
     private lateinit var binding: FragmentPostRateBinding
     private lateinit var post: Post
-    companion object {
-        private const val POST_KEY = "post_key"
+    private val ratingMap: HashMap<Int, Boolean> = HashMap()
 
-        fun newInstance(post: Post?): PostRateFragment {
+    companion object {
+        private const val POST_ID_KEY = "postId"
+
+        fun newInstance(postId: String): PostRateFragment {
             val fragment = PostRateFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(POST_KEY, post)
+            val bundle = Bundle().apply {
+                putString(POST_ID_KEY, postId)
+            }
             fragment.arguments = bundle
             return fragment
         }
@@ -40,14 +43,13 @@ class PostRateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostRateBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        post = arguments?.getSerializable(POST_KEY) as? Post ?: return
+        val postId = arguments?.getString(POST_ID_KEY) ?: ""
 
         val apiClient = ApiClient()
         val sessionManager = SessionManager(requireContext())
@@ -55,69 +57,58 @@ class PostRateFragment : Fragment() {
         viewModel = ViewModelProvider(this, PostRateViewModelFactory(repository)).get(
             PostRateViewModel::class.java)
 
+        // Observe postRatingLiveData
+        viewModel.postRatingLiveData.observe(viewLifecycleOwner, Observer { rating ->
+            // Clear previous data
+            ratingMap.clear()
 
-        viewModel.commentLiveData.observe(viewLifecycleOwner, Observer {  review ->
-            review?.let {
-                binding.editText.setText(it.comment)
-                binding.seekBar.progress = it.rate-1
-// Change ImageView source based on rating
-                val drawableResource = when (it.rate) {
-                    1 -> R.drawable.one
-                    2 -> R.drawable.two
-                    3 -> R.drawable.three
-                    4 -> R.drawable.four
-                    5 -> R.drawable.five
-                    else -> R.drawable.three // Use a default image if rate is out of range
-                }
-                binding.rateImageView.setImageResource(drawableResource)
+            // Set values in ratingMap
+            for (i in 1..5) {
+                ratingMap[i] = rating == i
             }
+
+            // Update UI based on ratingMap
+            updateButtons()
         })
-        viewModel.getReviewByPostIdAndUserId(post.id)
-            // Set up seekbar listener
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val drawableResource = when (progress) {
-                    0 -> R.drawable.one
-                    1 -> R.drawable.two
-                    2 -> R.drawable.three
-                    3 -> R.drawable.four
-                    4 -> R.drawable.five
-                    else -> R.drawable.one // Use a default image if progress is out of range
-                }
-                binding.rateImageView.setImageResource(drawableResource)
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // This method is called when the user starts interacting with the seekbar
-            }
+        // Get post rating
+        viewModel.getPostRating(postId)
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // This method is called when the user stops interacting with the seekbar
-                seekBar?.let {
-                    val rate = it.progress+1
-                    // Call the ViewModel method to rate the post
-                    viewModel.postRate(post.id, rate)
-
-                }
-            }
-        })
-        binding.commentButton.setOnClickListener {
-            val commentText = binding.editText.text.toString()
-            if (commentText.isNotEmpty()) {
-                viewModel.postComment(post.id, commentText)
-            }
+        // Set click listeners for rating buttons
+        binding.apply {
+            button1.setOnClickListener { onRatingButtonClicked(1) }
+            button2.setOnClickListener { onRatingButtonClicked(2) }
+            button3.setOnClickListener { onRatingButtonClicked(3) }
+            button4.setOnClickListener { onRatingButtonClicked(4) }
+            button5.setOnClickListener { onRatingButtonClicked(5) }
         }
+    }
 
-        viewModel.postCommentLiveData.observe(viewLifecycleOwner, Observer { status ->
-            if (status == "success") {
-                Toast.makeText(requireContext(), "Comment posted successfully", Toast.LENGTH_SHORT).show()
-                binding.commentButton.visibility = View.GONE
-                binding.editText.text!!.clear()
-                binding.editText.clearFocus()
-            } else {
-                Toast.makeText(requireContext(), "Failed to post comment", Toast.LENGTH_SHORT).show()
-            }
-        })
+    private fun onRatingButtonClicked(rating: Int) {
+        ratingMap.clear()
 
+        // Set values in ratingMap
+        for (i in 1..5) {
+            ratingMap[i] = rating == i
+        }
+        updateButtons()
+        val postId = arguments?.getString(POST_ID_KEY) ?: ""
+        viewModel.postRate(postId, rating)
+    }
+
+    private fun updateButtons() {
+        // Update button backgrounds based on ratingMap
+        binding.apply {
+            button1.backgroundTintList = getColorStateListForRating(1)
+            button2.backgroundTintList = getColorStateListForRating(2)
+            button3.backgroundTintList = getColorStateListForRating(3)
+            button4.backgroundTintList = getColorStateListForRating(4)
+            button5.backgroundTintList = getColorStateListForRating(5)
+        }
+    }
+
+    private fun getColorStateListForRating(rating: Int): ColorStateList? {
+        val colorResId = if (ratingMap[rating] == true) R.color.blue else R.color.gray
+        return ContextCompat.getColorStateList(requireContext(), colorResId)
     }
 }

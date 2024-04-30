@@ -26,11 +26,7 @@ class ChatRoomsViewModel(private val repository: MainRepository) : ViewModel() {
                 if (response.isSuccessful) {
                     val conversationResponse = response.body()
                     conversationResponse?.let {
-                        if (it.status == "success") {
                             _chatRoomsLiveData.postValue(it.chatRooms)
-                        } else {
-                            _errorLiveData.postValue("Error: ${it.message}")
-                        }
                     }
                 } else {
                     // Handle unsuccessful response

@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class ProfilePostListViewModel(private val repository: MainRepository) : ViewModel() {
 
-    private val _activePostsLiveData: MutableLiveData<List<Post>> = MutableLiveData()
-    val activePostsLiveData: LiveData<List<Post>> = _activePostsLiveData
+    private val _postsLiveData: MutableLiveData<List<Post>> = MutableLiveData()
+    val postsLiveData: LiveData<List<Post>> = _postsLiveData
 
     private val _userInfoLiveData: MutableLiveData<User> = MutableLiveData()
     val userInfoLiveData: LiveData<User> = _userInfoLiveData
@@ -24,7 +24,7 @@ class ProfilePostListViewModel(private val repository: MainRepository) : ViewMod
                 val response = repository.getUserPosts()
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        _activePostsLiveData.postValue(it.posts)
+                        _postsLiveData.postValue(it.posts)
                     }
                 } else {
                     // Handle unsuccessful response

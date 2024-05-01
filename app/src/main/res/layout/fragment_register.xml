@@ -33,17 +33,17 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailTextInputLayout"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
+          >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Поштаныз"
-                    android:layout_marginTop="16dp"
-                    android:background="#EFEFEF"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,6 +51,7 @@
                 android:id="@+id/passwordTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_marginTop="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -58,7 +59,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Құпия сөз"
-                    android:background="#EFEFEF"
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 

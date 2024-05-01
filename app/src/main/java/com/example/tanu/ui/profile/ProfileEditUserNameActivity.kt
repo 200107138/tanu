@@ -36,7 +36,9 @@ class ProfileEditUserNameActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Name cannot be empty", Snackbar.LENGTH_SHORT).show()
             }
         }
-
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         // Observe putUserNameResultLiveData
         viewModel.putUserNameResultLiveData.observe(this) { result ->
             if (result == "success") {

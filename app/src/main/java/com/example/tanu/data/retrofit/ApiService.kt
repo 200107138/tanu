@@ -27,6 +27,7 @@ import com.example.tanu.data.models.PostDiscussionRequest
 import com.example.tanu.data.models.PostDiscussionResponse
 import com.example.tanu.data.models.PostMessageRequest
 import com.example.tanu.data.models.PostMessageResponse
+import com.example.tanu.data.models.PostPostRequest
 import com.example.tanu.data.models.PostPostResponse
 import com.example.tanu.data.models.PostRateRequest
 import com.example.tanu.data.models.PostRateResponse
@@ -34,7 +35,10 @@ import com.example.tanu.data.models.PutPostStatusRequest
 import com.example.tanu.data.models.PutPostStatusResponse
 import com.example.tanu.data.models.PutUserNameRequest
 import com.example.tanu.data.models.PutUserNameResponse
+import com.example.tanu.data.models.RefreshTokenRequest
+import com.example.tanu.data.models.TokenResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -97,10 +101,11 @@ interface ApiService {
     @POST("/postPost")
     suspend fun postPost(
         @Part files: Array<MultipartBody.Part?>,
-        @Part("description") description: String,
-        @Part("title") title: String,
-        @Part("tel_donation") telDonation: Long,
-        @Part("card_donation") cardDonation: Long
+        @Part("description") description: RequestBody,
+        @Part("title") title: RequestBody,
+        @Part("tel_donation") telDonation: RequestBody,
+        @Part("card_donation") cardDonation: RequestBody,
+        @Part("category_id") categoryId: RequestBody
     ): Response<PostPostResponse>
 
     @GET("/getLeaderboardPosts")

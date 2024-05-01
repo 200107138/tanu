@@ -12,7 +12,7 @@ class SessionManager(context: Context) {
     }
 
     /**
-     * Function to save access token and refresh token
+     * Function to save access token, refresh token, and token expiry time
      */
     fun saveTokens(accessToken: String, refreshToken: String) {
         val editor = prefs.edit()
@@ -33,5 +33,13 @@ class SessionManager(context: Context) {
      */
     fun fetchRefreshToken(): String? {
         return prefs.getString(REFRESH_TOKEN, null)
+    }
+
+
+    /**
+     * Function to update access token and its expiration time
+     */
+    fun updateAccessToken(accessToken: String) {
+        saveTokens(accessToken, fetchRefreshToken()!!)
     }
 }

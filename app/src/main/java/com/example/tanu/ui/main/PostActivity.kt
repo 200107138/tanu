@@ -35,7 +35,9 @@ class PostActivity : AppCompatActivity() {
         // Retrieve postId from intent extras
         postId = intent.getStringExtra("postId") ?: return
         viewModel.getPostInfo(postId)
-
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         // Observe postInfoLiveData
         viewModel.postInfoLiveData.observe(this, Observer { post ->
             post?.let {

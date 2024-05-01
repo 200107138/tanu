@@ -38,7 +38,10 @@ import com.example.tanu.data.models.PutPostStatusRequest
 import com.example.tanu.data.models.PutPostStatusResponse
 import com.example.tanu.data.models.PutUserNameRequest
 import com.example.tanu.data.models.PutUserNameResponse
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class MainRepository(private val apiService: ApiService, private val sessionManager: SessionManager) {
@@ -269,25 +272,35 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
 
 
     suspend fun postPost(
-        mediaParts: Array<MultipartBody.Part?>,
+        files: Array<MultipartBody.Part?>,
         description: String,
         title: String,
         telDonation: Long,
-        cardDonation: Long
+        cardDonation: Long,
+        categoryId: String
     ): PostPostResponse? {
         try {
-            val response = apiService.postPost(mediaParts, description, title, telDonation, cardDonation)
+          val descriptionPart = RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+            val titlePart = RequestBody.create("text/plain".toMediaTypeOrNull(), title)
+            val telDonationPart = RequestBody.create("text/plain".toMediaTypeOrNull(), telDonation.toString())
+            val cardDonationPart = RequestBody.create("text/plain".toMediaTypeOrNull(), cardDonation.toString())
+            val categoryIdPart = RequestBody.create("text/plain".toMediaTypeOrNull(), categoryId)
+            val response = apiService.postPost(files=files, description=descriptionPart, title=titlePart, telDonation=telDonationPart, cardDonation=cardDonationPart, categoryId=categoryIdPart)
             return if (response.isSuccessful) {
                 response.body() // Return the response body
             } else {
+                // If response is not successful, return an error message
+                val errorMessage = "Failed to post discussion: ${response.code()} - ${response.message()}"
+                Log.e(TAG, errorMessage)
                 null
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Error posting discussion: ${e.message}")
+            // Handle network or other errors
+            val errorMessage = "Error posting discussion: ${e.message}"
+            Log.e(TAG, errorMessage)
             throw e
         }
     }
-
 
     suspend fun getLeaderboardPosts(): GetLeaderboardPostsResponse? {
         try {

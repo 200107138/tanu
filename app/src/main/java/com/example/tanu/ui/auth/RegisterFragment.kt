@@ -1,5 +1,6 @@
 package com.example.tanu.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,9 +26,23 @@ class RegisterFragment(private val sharedViewModel: AuthViewModel) : Fragment() 
             val password = binding.passwordEditText.text.toString()
             sharedViewModel.register(email, password)
         }
-
+        binding.login.setOnClickListener {
+            (activity as AuthActivity).navigateToLogin()
+        }
+        sharedViewModel.registerSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                // Start SuccessRegisterActivity
+                startActivity(Intent(requireContext(), SuccessRegisterActivity::class.java))
+                // Disable signup button to prevent multiple clicks
+                binding.signup.isEnabled = false
+            } else {
+                // Enable signup button if registration fails
+                binding.signup.isEnabled = true
+            }
+        }
         return binding.root
     }
+
 
     companion object {
         fun newInstance(sharedViewModel: AuthViewModel) = RegisterFragment(sharedViewModel)

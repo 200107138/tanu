@@ -25,7 +25,9 @@ class NewDiscussionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.close.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         val apiClient = ApiClient()
         val sessionManager = SessionManager(this)
         val repository = MainRepository(apiClient.getApiService(this), sessionManager)

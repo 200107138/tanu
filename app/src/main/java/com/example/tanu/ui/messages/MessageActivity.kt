@@ -54,7 +54,9 @@ class MessageActivity : AppCompatActivity() {
             Log.e("MessageViewModel", "getchatroomid is called")
             viewModel.getChatRoomId(postId=postId, receiverId=receiverId)
         }
-
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         // Set up click listener for sendMessageButton
         binding.sendMessageButton.setOnClickListener {
             // Retrieve message text from sendMessageEditText
@@ -95,6 +97,7 @@ class MessageActivity : AppCompatActivity() {
             // Update UI with post info
             post?.let {
                 binding.postTitle.text = it.title
+                binding.userName.text = it.user.name
                 if (it.mediaUrls.isNotEmpty()) {
                     Glide.with(this).load(it.mediaUrls[0]).into(binding.postMedia)
                 }
@@ -133,7 +136,7 @@ class MessageActivity : AppCompatActivity() {
     private fun connectToSocketIO() {
         try {
             // Connect to Socket.IO server
-            socket = IO.socket("http://10.0.2.2:3002")
+            socket = IO.socket("https://api-tanu.onrender.com")
             val accessToken = SessionManager(this).fetchAccessToken()
             socket.emit("connected", viewModel.chatRoomId.value, accessToken)
             // Listen for "newMessage" event

@@ -20,6 +20,7 @@ import com.example.tanu.data.retrofit.ApiClient
 import com.example.tanu.databinding.FragmentProfileBinding
 import com.example.tanu.ui.auth.AuthActivity
 import com.example.tanu.ui.main.LeaderboardActivity
+import com.example.tanu.ui.main.PostPostActivity
 
 
 class ProfileFragment : Fragment() {
@@ -59,6 +60,9 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
             // Open AuthActivity
             startActivity(Intent(requireContext(), AuthActivity::class.java))
+        }
+        binding.add.setOnClickListener {
+            startActivity(Intent(requireContext(), PostPostActivity::class.java))
         }
         // Observe userInfoLiveData
         viewModel.userInfoLiveData.observe(viewLifecycleOwner, Observer { userInfo ->

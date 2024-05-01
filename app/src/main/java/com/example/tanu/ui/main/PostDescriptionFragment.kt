@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.tanu.SessionManager
+import com.example.tanu.data.UserHolder
 import com.example.tanu.data.adapters.PostMediaAdapter
 import com.example.tanu.data.models.Post
 import com.example.tanu.data.repository.MainRepository
@@ -54,13 +55,23 @@ class PostDescriptionFragment : Fragment() {
             binding.description.text = post.description
             binding.email.text = post.user.email
             // Set click listener for message button
-            binding.messageButton.setOnClickListener {
-                // Create an Intent to start the MessageActivity
-                val intent = Intent(requireContext(), MessageActivity::class.java)
-                intent.putExtra("postId", post.id)
-                intent.putExtra("receiverId", post.user.id)
-                // Start the MessageActivity
-                startActivity(intent)
+            // Check if the post's user ID matches the current user's ID
+            if (post.user.id == UserHolder.userId) {
+                // If it matches, hide the message button
+                binding.messageButton.visibility = View.GONE
+            } else {
+                // If it doesn't match, show the message button
+                binding.messageButton.visibility = View.VISIBLE
+
+                // Set click listener for message button
+                binding.messageButton.setOnClickListener {
+                    // Create an Intent to start the MessageActivity
+                    val intent = Intent(requireContext(), MessageActivity::class.java)
+                    intent.putExtra("postId", post.id)
+                    intent.putExtra("receiverId", post.user.id)
+                    // Start the MessageActivity
+                    startActivity(intent)
+                }
             }
             binding.avatar.setOnClickListener {
                 val profileIntent = Intent(requireContext(), ProfileActivity::class.java)

@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
@@ -42,6 +43,7 @@ class PostPostActivity : AppCompatActivity() {
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
     private var categoryList = listOf<PostCategory>()
     private lateinit var mediaAdapter: MediaListAdapter
+    private var selectedCategoryId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostPostBinding.inflate(layoutInflater)
@@ -50,7 +52,17 @@ class PostPostActivity : AppCompatActivity() {
         val sessionManager = SessionManager(this)
         val repository = MainRepository(apiClient.getApiService(this), sessionManager)
         viewModel = ViewModelProvider(this, PostPostViewModelFactory(repository)).get(PostPostViewModel::class.java)
-
+        viewModel.uploadStatus.observe(this) { uploading ->
+            if (uploading) {
+                // If uploading is true, finish this activity and start SuccessPostPostActivity
+                val intent = Intent(this, SuccessPostPostActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                // If uploading is false, enable the button
+                binding.btnSubmit.isEnabled = true
+            }
+        }
         viewModel.getPostCategories()
 
         viewModel.postCategoriesLiveData.observe(this) { categories ->
@@ -60,6 +72,9 @@ class PostPostActivity : AppCompatActivity() {
 
         binding.uploadMediaLayout.setOnClickListener {
             openPhotoPicker()
+        }
+        binding.close.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
         // Initialize ActivityResultLauncher
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -78,8 +93,11 @@ class PostPostActivity : AppCompatActivity() {
             }
             showPostView()
         }
-        binding.btnSubmit.setOnClickListener { uploadToServer() }
+        binding.btnSubmit.setOnClickListener {
+            uploadToServer()
+        }
     }
+
     private fun openPhotoPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -102,23 +120,30 @@ class PostPostActivity : AppCompatActivity() {
 
 
     private fun uploadToServer() {
+        binding.btnSubmit.isEnabled = false
         val description = binding.description.text.toString()
         val title = binding.title.text.toString()
-
-        // Parse telDonation and cardDonation directly as Long
-        val telDonation = binding.telDonation.text.toString().toLong()
-        val cardDonation = binding.cardDonation.text.toString().toLong()
-
-        // Convert Uri images to MultipartBody.Part
+        val telDonation = binding.telDonation.text.toString()
+        val cardDonation = binding.cardDonation.text.toString()
         val list: MutableList<MultipartBody.Part> = ArrayList()
         for (uri in images) {
             list.add(prepairFiles("files", uri))
         }
 
-        // Call ViewModel function to upload images
-        viewModel.postPost(list.toTypedArray(), description, title, telDonation, cardDonation)
+        if (list.isNotEmpty() && description.isNotEmpty() && title.isNotEmpty() && telDonation.isNotEmpty() && cardDonation.isNotEmpty() && selectedCategoryId != null && images.isNotEmpty()) {
+                viewModel.postPost(
+                    files = list.toTypedArray(),
+                    description = description,
+                    title = title,
+                    telDonation = telDonation.toLong(),
+                    cardDonation = cardDonation.toLong(),
+                    categoryId = selectedCategoryId!!
+                )
+        } else {
+            // Show error message for missing fields
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+        }
     }
-
     private fun prepairFiles(partName: String, fileUri: Uri): MultipartBody.Part {
         val contentResolver = contentResolver
         val inputStream = contentResolver.openInputStream(fileUri)
@@ -146,8 +171,7 @@ class PostPostActivity : AppCompatActivity() {
 
         // Set a click listener to handle item selection
         categoryDropdown.setOnItemClickListener { _, _, position, _ ->
-            val selectedCategory = categoryList[position] // Get the selected category object
-            // Do something with the selected category if needed
+            selectedCategoryId = categoryList[position].id // Save selectedCategoryId
         }
     }
 

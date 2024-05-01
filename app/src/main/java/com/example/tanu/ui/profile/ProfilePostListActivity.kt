@@ -30,12 +30,21 @@ class ProfilePostListActivity : AppCompatActivity() {
         val repository = MainRepository(apiClient.getApiService(this), sessionManager)
         viewModel = ViewModelProvider(this, ProfilePostListViewModelFactory(repository)).get(
             ProfilePostListViewModel::class.java)
-        // Get the post type from arguments
-        val postType = intent.getStringExtra("postType") ?: ""
+
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         setupRecyclerView()
 
+        val postType = intent.getStringExtra("postType") ?: ""
+        when (postType) {
+            "active" -> binding.status.text = "белсенді"
+            "inactive" -> binding.status.text = "белсенді емес"
+            else -> binding.status.text = "" // You can set a default value if needed
+        }
         // Observe active posts LiveData
-        viewModel.activePostsLiveData.observe(this, Observer { posts ->
+        viewModel.postsLiveData.observe(this, Observer { posts ->
             val filteredPosts = when (postType) {
                 "active" -> posts.filter { it.status == "active" }
                 "inactive" -> posts.filter { it.status == "inactive" }

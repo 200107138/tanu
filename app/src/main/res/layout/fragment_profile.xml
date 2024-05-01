@@ -72,7 +72,7 @@ android:background="#EDEFF1"
 <com.google.android.material.button.MaterialButton
     android:layout_width="match_parent"
     android:text="жуктеу"
-
+android:id="@+id/add"
     android:layout_below="@+id/info"
     android:layout_height="wrap_content"></com.google.android.material.button.MaterialButton>
         </RelativeLayout>

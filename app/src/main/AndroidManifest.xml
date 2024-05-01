@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Tanu"
         tools:targetApi="34">
         <activity
+            android:name=".ui.auth.SuccessRegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.SuccessPostPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.ProfileEditUserNameActivity"
             android:exported="false" />
         <activity

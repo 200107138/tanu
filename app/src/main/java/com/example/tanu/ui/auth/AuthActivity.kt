@@ -29,13 +29,6 @@ class AuthActivity : AppCompatActivity() {
         val sharedFactory = AuthViewModelFactory(repository)
         sharedViewModel = ViewModelProvider(this, sharedFactory).get(AuthViewModel::class.java)
 
-        // Observe login success
-        sharedViewModel.loginSuccess.observe(this, Observer { success ->
-            if (success) {
-                navigateToMainActivity()
-            }
-        })
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, LoginFragment.newInstance(sharedViewModel))
@@ -43,7 +36,7 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMainActivity() {
+    fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish() // Finish AuthActivity to prevent going back
@@ -52,6 +45,12 @@ class AuthActivity : AppCompatActivity() {
     fun navigateToRegister() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, RegisterFragment.newInstance(sharedViewModel))
+            .addToBackStack(null)
+            .commit()
+    }
+    fun navigateToLogin() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, LoginFragment.newInstance(sharedViewModel))
             .addToBackStack(null)
             .commit()
     }

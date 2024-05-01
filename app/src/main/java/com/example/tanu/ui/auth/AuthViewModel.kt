@@ -14,6 +14,10 @@ class AuthViewModel(private val repository: MainRepository) : ViewModel() {
     val loginSuccess: LiveData<Boolean>
         get() = _loginSuccess
 
+    private val _registerSuccess = MutableLiveData<Boolean>()
+    val registerSuccess: LiveData<Boolean>
+        get() = _registerSuccess
+
     fun login(email: String, password: String) {
         viewModelScope.launch {
             try {

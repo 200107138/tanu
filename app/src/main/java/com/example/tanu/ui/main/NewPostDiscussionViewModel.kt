@@ -1,10 +1,12 @@
 package com.example.tanu.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tanu.data.models.DiscussionCategory
+import com.example.tanu.data.models.Post
 import com.example.tanu.data.models.PostDiscussionRequest
 import com.example.tanu.data.repository.MainRepository
 import kotlinx.coroutines.launch
@@ -18,15 +20,33 @@ class NewPostDiscussionViewModel(private val repository: MainRepository) : ViewM
     private val _postDiscussionLiveData = MutableLiveData<Boolean>()
     val postDiscussionLiveData: LiveData<Boolean> get() = _postDiscussionLiveData
 
-    fun postDiscussion(title: String, text: String, postId: String) {
+    private val _postInfoLiveData = MutableLiveData<Post>()
+    val postInfoLiveData: LiveData<Post> = _postInfoLiveData
+    fun postDiscussion(title: String, description: String, postId: String) {
         val request =
-            PostDiscussionRequest(title = title, text = text, postId = postId, categoryId = "662676bf9b230eefa591da11")
+            PostDiscussionRequest(title = title, description = description, postId = postId, categoryId = "662676bf9b230eefa591da11")
         viewModelScope.launch {
             try {
                 val response = repository.postDiscussion(request)
                 _postDiscussionLiveData.value = response?.status == "success"
             } catch (e: Exception) {
                 _postDiscussionLiveData.value = false
+            }
+        }
+    }
+    fun getPostInfo(postId: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getPostInfo(postId)
+                if (response.isSuccessful) {
+                    _postInfoLiveData.postValue(response.body()?.post)
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("MessageViewModel", "Unsuccessful response: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                // Handle error
+                Log.e("MessageViewModel", "Error getting post info: ${e.message}")
             }
         }
     }

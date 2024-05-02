@@ -9,6 +9,7 @@ package com.example.tanu.ui.main
     import androidx.appcompat.app.AppCompatActivity
     import androidx.lifecycle.Observer
     import androidx.lifecycle.ViewModelProvider
+    import com.bumptech.glide.Glide
     import com.example.tanu.databinding.ActivityNewDiscussionBinding
     import com.example.tanu.SessionManager
     import com.example.tanu.data.models.DiscussionCategory
@@ -33,11 +34,20 @@ class NewPostDiscussionActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this, factory).get(NewPostDiscussionViewModel::class.java)
 
             val postId = intent.getStringExtra("postId") ?: ""
+            viewModel.getPostInfo(postId)
+            viewModel.postInfoLiveData.observe(this, Observer { post ->
+                post?.let {
+                    binding.postTitle.text=post.title
+                    if (it.mediaUrls.isNotEmpty()) {
+                        Glide.with(this).load(it.mediaUrls[0]).into(binding.postMedia)
+                    }
+                }
+            })
             binding.submitButton.setOnClickListener {
                 binding.submitButton.isEnabled = false
                 val title = binding.title.text.toString()
-                val text = binding.text.text.toString()
-                viewModel.postDiscussion(title, text, postId)
+                val description = binding.description.text.toString()
+                viewModel.postDiscussion(title, description, postId)
             }
             viewModel.postDiscussionLiveData.observe(this, Observer { isSuccess ->
                 if (isSuccess) {

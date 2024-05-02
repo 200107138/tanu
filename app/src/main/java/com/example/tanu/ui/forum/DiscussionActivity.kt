@@ -3,6 +3,7 @@ package com.example.tanu.ui.forum
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +62,14 @@ class DiscussionActivity : AppCompatActivity() {
                     Glide.with(binding.root)
                         .load(discussion.user.avatarUrl)
                         .into(binding.userAvatar)
+                }
+                if (discussion.post == null) {
+                    // If the title is null, hide the postInfo view
+                    binding.postInfo.visibility = View.GONE
+                } else {
+                    // If the title is not null, show the postInfo view
+                    binding.postInfo.visibility = View.VISIBLE
+                    binding.postTitle.text = discussion.post.title
                 }
             }
         })

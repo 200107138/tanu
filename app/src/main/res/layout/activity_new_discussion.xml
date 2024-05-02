@@ -80,7 +80,7 @@ android:id="@+id/title"
 
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
-android:id="@+id/text"
+android:id="@+id/description"
             android:gravity="top|start"
             android:layout_width="match_parent"
             android:layout_height="200dp" />

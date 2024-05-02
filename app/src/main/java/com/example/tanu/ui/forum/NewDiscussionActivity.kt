@@ -43,9 +43,11 @@ class NewDiscussionActivity : AppCompatActivity() {
 
         viewModel.postDiscussionLiveData.observe(this, Observer { isSuccess ->
             if (isSuccess) {
+                binding.submitButton.isEnabled = false
                 Toast.makeText(this, "Discussion posted successfully", Toast.LENGTH_SHORT).show()
                 finish() // Close the activity
             } else {
+                binding.submitButton.isEnabled = true
                 Toast.makeText(this, "Failed to post discussion", Toast.LENGTH_SHORT).show()
             }
         })
@@ -61,9 +63,10 @@ class NewDiscussionActivity : AppCompatActivity() {
             val categoryId = selectedCategory.id // Get the ID of the selected category
             // Call postDiscussion function with the selected category ID
             binding.submitButton.setOnClickListener {
+                binding.submitButton.isEnabled = false
                 val title = binding.title.text.toString()
-                val text = binding.text.text.toString()
-                viewModel.postDiscussion(title, text, categoryId)
+                val description = binding.description.text.toString()
+                viewModel.postDiscussion(title, description, categoryId)
             }
         }
     }

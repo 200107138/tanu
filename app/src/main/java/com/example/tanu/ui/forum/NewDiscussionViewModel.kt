@@ -17,8 +17,8 @@ class NewDiscussionViewModel(private val repository: MainRepository) : ViewModel
     private val _postDiscussionLiveData = MutableLiveData<Boolean>()
     val postDiscussionLiveData: LiveData<Boolean> get() = _postDiscussionLiveData
 
-    fun postDiscussion(title: String, text: String, categoryId: String) {
-        val request = PostDiscussionRequest(title = title, text = text, postId = null, categoryId = categoryId)
+    fun postDiscussion(title: String, description: String, categoryId: String) {
+        val request = PostDiscussionRequest(title = title, description = description, postId = null, categoryId = categoryId)
         viewModelScope.launch {
             try {
                 val response = repository.postDiscussion(request)

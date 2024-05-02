@@ -35,7 +35,7 @@ class DiscussionListAdapter(private val context: Context) :
                 // Open DiscussionActivity here
                 val intent = Intent(context, DiscussionActivity::class.java)
                 // You may need to pass some data to DiscussionActivity
-                intent.putExtra("discussion_id", discussion.id)
+                intent.putExtra("discussionId", discussion.id)
                 context.startActivity(intent)
             }
             binding.executePendingBindings()

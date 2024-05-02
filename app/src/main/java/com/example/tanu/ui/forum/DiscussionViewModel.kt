@@ -1,6 +1,8 @@
 // DiscussionViewModel.kt
 package com.example.tanu.ui.forum
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -62,7 +64,7 @@ class DiscussionViewModel(private val repository: MainRepository) : ViewModel() 
                 if (response?.status == "success") {
                     _discussionInfoLiveData.postValue(response.discussion)
                 } else {
-                    // Handle error or empty response
+                    Log.e(ContentValues.TAG, response!!.status)
                 }
             } catch (e: Exception) {
                 // Handle network or other errors

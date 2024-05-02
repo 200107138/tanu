@@ -10,7 +10,7 @@
     </data>
 
     <RelativeLayout
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="wrap_content"
@@ -25,9 +25,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/baseline_account_circle_24"
-            android:tint="#9EAFBC"
-            app:shapeAppearanceOverlay="@style/Circular" />
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:src="@drawable/avatar_holder" />
 
         <TextView
             android:id="@+id/name"

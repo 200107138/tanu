@@ -94,6 +94,7 @@ class PostPostActivity : AppCompatActivity() {
             showPostView()
         }
         binding.btnSubmit.setOnClickListener {
+            binding.btnSubmit.isEnabled = false
             uploadToServer()
         }
     }

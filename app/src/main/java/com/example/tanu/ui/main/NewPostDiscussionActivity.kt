@@ -34,6 +34,7 @@ class NewPostDiscussionActivity : AppCompatActivity() {
 
             val postId = intent.getStringExtra("postId") ?: ""
             binding.submitButton.setOnClickListener {
+                binding.submitButton.isEnabled = false
                 val title = binding.title.text.toString()
                 val text = binding.text.text.toString()
                 viewModel.postDiscussion(title, text, postId)

@@ -78,6 +78,9 @@ class MessageViewModel(private val repository: MainRepository) : ViewModel() {
                         }
                         _newMessageLiveData.postValue(true)
                     }
+                    else{
+                        Log.e("MessageViewModel", response!!.message)
+                    }
                 } catch (e: Exception) {
                     Log.e("MessageViewModel", "Error getting post info: ${e.message}")
                 }

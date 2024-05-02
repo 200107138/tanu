@@ -23,6 +23,7 @@ class LoginFragment(private val sharedViewModel: AuthViewModel) : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         binding.signIn.setOnClickListener {
+            binding.signIn.isEnabled = false
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             sharedViewModel.login(email, password)
@@ -36,7 +37,6 @@ class LoginFragment(private val sharedViewModel: AuthViewModel) : Fragment() {
                 // Start SuccessRegisterActivity
                 (activity as AuthActivity).navigateToMainActivity()
                 // Disable signup button to prevent multiple clicks
-                binding.signIn.isEnabled = false
             } else {
                 // Enable signup button if registration fails
                 binding.signIn.isEnabled = true

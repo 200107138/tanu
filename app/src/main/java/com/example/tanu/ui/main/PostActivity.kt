@@ -43,7 +43,7 @@ class PostActivity : AppCompatActivity() {
             post?.let {
                 // Set title
                 binding.postTitle.text = it.title
-
+                binding.postTitle2.text = it.title
 
                 // Set up ViewPager2 with MediaListAdapter
                 val mediaListAdapter = PostMediaAdapter(it.mediaUrls)

@@ -53,7 +53,7 @@ class PostDescriptionFragment : Fragment() {
         viewModel.postInfoLiveData.observe(viewLifecycleOwner) { post ->
             // Update the UI with post info
             binding.description.text = post.description
-            binding.email.text = post.user.email
+            binding.name.text = post.user.name
             // Set click listener for message button
             // Check if the post's user ID matches the current user's ID
             if (post.user.id == UserHolder.userId) {

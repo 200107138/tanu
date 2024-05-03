@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="desc"
+        tools:text="description"
 
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,17 +62,17 @@ android:textColor="@color/black"
             android:layout_margin="8dp"
             android:visibility="gone"
             android:text="Жазу"
-            app:layout_constraintBottom_toBottomOf="@+id/email"
+            app:layout_constraintBottom_toBottomOf="@+id/name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/email"></Button>
+            app:layout_constraintTop_toTopOf="@+id/name"></Button>
 
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="email"
+            tools:text="name"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
             app:layout_constraintStart_toEndOf="@+id/avatar"

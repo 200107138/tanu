@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
      android:id="@+id/userName"
-                android:text="аты"
+                tools:text="аты"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="postTitle"
+                tools:text="postTitle"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/postMedia"
                 app:layout_constraintStart_toEndOf="@+id/postMedia"

@@ -70,6 +70,9 @@ class DiscussionActivity : AppCompatActivity() {
                     // If the title is not null, show the postInfo view
                     binding.postInfo.visibility = View.VISIBLE
                     binding.postTitle.text = discussion.post.title
+                    if (discussion.post.mediaUrls.isNotEmpty()) {
+                        Glide.with(this).load(discussion.post.mediaUrls[0]).into(binding.postMedia)
+                    }
                 }
             }
         })

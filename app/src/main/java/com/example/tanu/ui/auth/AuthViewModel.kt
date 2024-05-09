@@ -10,11 +10,11 @@ import com.example.tanu.data.repository.MainRepository
 
 class AuthViewModel(private val repository: MainRepository) : ViewModel() {
 
-    private val _loginSuccess = MutableLiveData<Boolean>()
+    val _loginSuccess = MutableLiveData<Boolean>()
     val loginSuccess: LiveData<Boolean>
         get() = _loginSuccess
 
-    private val _registerSuccess = MutableLiveData<Boolean>()
+    val _registerSuccess = MutableLiveData<Boolean>()
     val registerSuccess: LiveData<Boolean>
         get() = _registerSuccess
 
@@ -32,10 +32,10 @@ class AuthViewModel(private val repository: MainRepository) : ViewModel() {
     fun register(email: String, password: String) {
         viewModelScope.launch {
             try {
-                val request = AuthRequest(email, password)
-                repository.register(request)
+                val response = repository.register(AuthRequest(email, password))
+                _registerSuccess.value = response?.status == "success"
             } catch (e: Exception) {
-                // Handle registration failure
+                _registerSuccess.value = false
             }
         }
     }

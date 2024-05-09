@@ -49,7 +49,9 @@ class DiscussionActivity : AppCompatActivity() {
                 adapter.setDiscussionComments(discussionComments)
             }
         })
-
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         viewModel.getDiscussionCommentsById(discussionId)
 
         viewModel.getDiscussionInfo(discussionId)

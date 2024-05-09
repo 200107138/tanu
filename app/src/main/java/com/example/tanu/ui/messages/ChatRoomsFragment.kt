@@ -64,6 +64,7 @@ class ChatRoomsFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.chatRoomsLiveData.observe(viewLifecycleOwner) { chatRooms ->
             chatRooms?.let {
+                binding.chatRoomsRecyclerView.visibility = View.VISIBLE
                 chatRoomsAdapter.submitList(it)
             }
         }

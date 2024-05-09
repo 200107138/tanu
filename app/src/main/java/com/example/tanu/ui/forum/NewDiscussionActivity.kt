@@ -39,7 +39,9 @@ class NewDiscussionActivity : AppCompatActivity() {
             categoryList = categories // Store the list of categories
             setCategoryDropdown(categories.map { it.name }) // Pass the list of category names to set up the dropdown
         }
-
+        binding.close.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         viewModel.postDiscussionLiveData.observe(this, Observer { isSuccess ->
             if (isSuccess) {

@@ -37,18 +37,24 @@ class AuthActivity : AppCompatActivity() {
     }
 
     fun navigateToMainActivity() {
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish() // Finish AuthActivity to prevent going back
     }
-
+    fun resetSuccessFlags() {
+        sharedViewModel._loginSuccess.postValue(false)
+        sharedViewModel._registerSuccess.postValue(false)
+    }
     fun navigateToRegister() {
+        resetSuccessFlags()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, RegisterFragment.newInstance(sharedViewModel))
             .addToBackStack(null)
             .commit()
     }
     fun navigateToLogin() {
+        resetSuccessFlags()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, LoginFragment.newInstance(sharedViewModel))
             .addToBackStack(null)

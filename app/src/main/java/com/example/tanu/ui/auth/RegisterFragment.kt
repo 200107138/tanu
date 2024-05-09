@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.tanu.R
@@ -22,6 +23,7 @@ class RegisterFragment(private val sharedViewModel: AuthViewModel) : Fragment() 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
         binding.signup.setOnClickListener {
+            binding.signup.isEnabled = false
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             sharedViewModel.register(email, password)
@@ -31,8 +33,9 @@ class RegisterFragment(private val sharedViewModel: AuthViewModel) : Fragment() 
         }
         sharedViewModel.registerSuccess.observe(viewLifecycleOwner) { success ->
             if (success) {
-                // Start SuccessRegisterActivity
-                startActivity(Intent(requireContext(), SuccessRegisterActivity::class.java))
+                Toast.makeText(requireContext(), "Тіркелу сәтті өтті!", Toast.LENGTH_SHORT).show()
+                (activity as AuthActivity).navigateToLogin()
+
                 // Disable signup button to prevent multiple clicks
                 binding.signup.isEnabled = false
             } else {

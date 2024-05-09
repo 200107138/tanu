@@ -38,6 +38,7 @@ import com.example.tanu.data.models.PutPostStatusRequest
 import com.example.tanu.data.models.PutPostStatusResponse
 import com.example.tanu.data.models.PutUserNameRequest
 import com.example.tanu.data.models.PutUserNameResponse
+import com.example.tanu.data.models.RegisterResponse
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -69,13 +70,18 @@ class MainRepository(private val apiService: ApiService, private val sessionMana
     }
 
 
-    suspend fun register(request: AuthRequest) {
+    suspend fun register(request: AuthRequest): RegisterResponse? {
+        try {
         val response = apiService.register(request)
-        if (response.isSuccessful) {
-            Log.e(TAG, "Registration ssssss")
+        return if (response.isSuccessful) {
+            response.body()
         } else {
             throw Exception("Registration failed") // Handle registration failure
-            Log.e(TAG, "Registration failed")
+            null
+        }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error sending message: ${e.message}")
+            throw e
         }
     }
 

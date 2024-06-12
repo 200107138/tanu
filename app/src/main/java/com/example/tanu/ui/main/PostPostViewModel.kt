@@ -21,17 +21,11 @@ class PostPostViewModel(private val repository: MainRepository) : ViewModel() {
 
 
     fun postPost(files: Array<MultipartBody.Part?>, description: String, title: String, telDonation: Long, cardDonation: Long, categoryId: String) {
-        _uploadStatus.value = true // Set upload status to true when starting the upload
         viewModelScope.launch {
             try {
-                val response = repository.postPost(files = files, description = description, title = title, telDonation = telDonation, cardDonation = cardDonation, categoryId = categoryId)
-                if (response!!.status == "success") {
-                    // Upload successful
-                    _uploadStatus.postValue(false)
-                } else {
-                    // Upload failed
-                    _uploadStatus.postValue(true)
-                }
+                val response = repository.postPost(files = files, description = description, title = title, telDonation = telDonation, cardDonation = cardDonation, categoryId = categoryId)// Upload failed
+                // Upload successful
+                _uploadStatus.value = response!!.status == "success"
             } catch (e: Exception) {
                 // Handle exceptions here if needed
                 Log.e(ContentValues.TAG, "Error posting post: ${e.message}")

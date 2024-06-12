@@ -85,8 +85,7 @@ class PostPostActivity : AppCompatActivity() {
                     for (i in 0 until count) {
                         val imageUri = data.clipData!!.getItemAt(i).uri
                         images.add(imageUri)
-                    }
-                } else if (data?.data != null) { // Single image selected
+                    } } else if (data?.data != null) { // Single image selected
                     val imageUri = data.data
                     images.add(imageUri!!)
                 }
